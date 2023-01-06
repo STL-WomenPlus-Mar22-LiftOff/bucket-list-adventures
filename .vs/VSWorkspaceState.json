@@ -1,6 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\BucketListAdventures",
+    "\\BucketListAdventures\\Controllers",
+    "\\HelloWorld",
+    "\\HelloWorld\\Properties",
+    "\\HelloWorld\\Views"
   ],
+  "SelectedNode": "\\BucketListAdventures\\BucketListAdventures.csproj",
   "PreviewInSolutionExplorer": false
 }

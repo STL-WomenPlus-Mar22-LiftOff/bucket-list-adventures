@@ -1,0 +1,101 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = BucketListAdventures
+build_property.RootNamespace = BucketListAdventures
+build_property.ProjectDir = C:\Users\natas\Desktop\LaunchCode\bucket-list-adventures\BucketListAdventures\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\natas\Desktop\LaunchCode\bucket-list-adventures\BucketListAdventures
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/BucketList/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVja2V0TGlzdFxBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/BucketList/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVja2V0TGlzdFxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/BucketList/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVja2V0TGlzdFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/BucketList/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVja2V0TGlzdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Destination/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cQWRkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Destination/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Destination/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Destination/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGluYXRpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Home/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Home/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTaWduVXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Search/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/UserProfile/EditProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclByb2ZpbGVcRWRpdFByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/UserProfile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclByb2ZpbGVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/natas/Desktop/LaunchCode/bucket-list-adventures/BucketListAdventures/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-2pkn40n8lk
