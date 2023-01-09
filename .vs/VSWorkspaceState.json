@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\HelloWorld\\bin",
+    "\\HelloWorld\\Controllers",
+    "\\HelloWorld\\Models",
+    "\\HelloWorld\\obj",
+    "\\HelloWorld\\Properties",
+    "\\HelloWorld\\Views",
+    "\\HelloWorld\\wwwroot"
+  ],
+  "PreviewInSolutionExplorer": false
+}

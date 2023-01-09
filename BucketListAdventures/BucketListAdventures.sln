@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketListAdventures", "BucketListAdventures.csproj", "{C3787E55-7F8B-46C9-8364-0A72CC9A5B1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3787E55-7F8B-46C9-8364-0A72CC9A5B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3787E55-7F8B-46C9-8364-0A72CC9A5B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3787E55-7F8B-46C9-8364-0A72CC9A5B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3787E55-7F8B-46C9-8364-0A72CC9A5B1D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE6C207C-2FC8-425D-A18A-74B0D96F3201}
+	EndGlobalSection
+EndGlobal
