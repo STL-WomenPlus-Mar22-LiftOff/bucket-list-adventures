@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\natas\\Desktop\\LaunchCode\\bucket-list-adventures\\BucketListAdventures\\BucketListAdventures.csproj": {}
+    "D:\\Soniya\\Launchcode\\bucket-list-adventures\\BucketListAdventures\\BucketListAdventures.csproj": {}
   },
   "projects": {
-    "C:\\Users\\natas\\Desktop\\LaunchCode\\bucket-list-adventures\\BucketListAdventures\\BucketListAdventures.csproj": {
+    "D:\\Soniya\\Launchcode\\bucket-list-adventures\\BucketListAdventures\\BucketListAdventures.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\natas\\Desktop\\LaunchCode\\bucket-list-adventures\\BucketListAdventures\\BucketListAdventures.csproj",
+        "projectUniqueName": "D:\\Soniya\\Launchcode\\bucket-list-adventures\\BucketListAdventures\\BucketListAdventures.csproj",
         "projectName": "BucketListAdventures",
-        "projectPath": "C:\\Users\\natas\\Desktop\\LaunchCode\\bucket-list-adventures\\BucketListAdventures\\BucketListAdventures.csproj",
-        "packagesPath": "C:\\Users\\natas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\natas\\Desktop\\LaunchCode\\bucket-list-adventures\\BucketListAdventures\\obj\\",
+        "projectPath": "D:\\Soniya\\Launchcode\\bucket-list-adventures\\BucketListAdventures\\BucketListAdventures.csproj",
+        "packagesPath": "C:\\Users\\vkson\\.nuget\\packages\\",
+        "outputPath": "D:\\Soniya\\Launchcode\\bucket-list-adventures\\BucketListAdventures\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\natas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vkson\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -74,6 +74,10 @@
               "target": "Package",
               "version": "[6.0.11, )"
             },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.11, )"
+            },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[6.0.2, )"
@@ -85,8 +89,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -98,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
