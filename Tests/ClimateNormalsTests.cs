@@ -5,15 +5,24 @@ namespace ClimateNormalsTests
     [TestClass]
     public class ClimateNormals
     {
+        public IEnumerable<MonthlyData> sampleData;
+
+        [TestInitialize]
+        public void GetSampleDataset()
+        {
+            sampleData = GetClimateNormals("AQW00061705");
+        }
+
+        [TestMethod]
+        public void GetClimateNormalsReturnsSomething()
+        {
+            Assert.IsTrue(sampleData.Count() > 0, "Expected a non-empty collection.");
+        }
+
         [TestMethod]
         public void GetClimateNormalsReturnsTwelveObjects()
         {
-            IEnumerable<MonthlyData> data = GetClimateNormals();
-            Assert.AreEqual(data.Count(), 12);
-            foreach (MonthlyData line in data)
-            {
-                Console.WriteLine(line);
-            }
+            Assert.AreEqual(sampleData.Count(), 12);
         }
     }
 }
