@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using System.Net;
 using System.IO;
 
 namespace BucketListAdventures.Models
@@ -18,17 +19,29 @@ namespace BucketListAdventures.Models
 
         public static IEnumerable<MonthlyData> GetClimateNormals()
         {
+            IEnumerable<MonthlyData> records;
+
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 PrepareHeaderForMatch = args => args.Header.Replace('-','_'),
             };
-            //"@" symbol is for raw string literal
-            using (var reader = new StreamReader(@"https://noaanormals.blob.core.windows.net/climate-normals/normals-monthly/1991-2020/access/AQW00061705.csv"))
-            using (var csv = new CsvReader(reader, config))
+            
+            using (HttpClient httpClient = new HttpClient())
             {
-                var records = csv.GetRecords<MonthlyData>();
-                return records;
+                httpClient.Timeout = TimeSpan.FromSeconds(5.0);
+                //"@" symbol is for raw string literal
+                var requestUrl = @"https://noaanormals.blob.core.windows.net/climate-normals/normals-monthly/1991-2020/access/AQW00061705.csv";
+                var stream = httpClient.GetStreamAsync(requestUrl).Result;
+
+                using (var reader = new StreamReader(stream))
+                {
+                    using (var csv = new CsvReader(reader, config))
+                    {
+                        records = csv.GetRecords<MonthlyData>().ToList();
+                    }
+                }
             }
+            return records;
         }
     }
 }
