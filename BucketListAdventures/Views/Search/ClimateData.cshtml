@@ -18,28 +18,36 @@
         type: 'line',
         data: {
             labels: labels,
+            fill: "origin",
             datasets: 
             [
                 {
-                label: "Max temp",
-                data: climateData.map(month => month.mlY_TMAX_NORMAL),
-                borderWidth: 1
+                    label: "Mininum temperature",
+                    data: climateData.map(month => month.mlY_TMIN_NORMAL),
+                    borderWidth: 1,
+                    fill: "origin",
                 },
                 {
-                label: "Min temp",
-                data: climateData.map(month => month.mlY_TMIN_NORMAL),
-                borderWidth: 1
+                    label: "Maximum temperature",
+                    data: climateData.map(month => month.mlY_TMAX_NORMAL),
+                    borderWidth: 1,
+                    fill: "+1",
                 },
                 {
-                label: "Avg temp",
-                data: climateData.map(month => month.mlY_TAVG_NORMAL),
-                borderWidth: 1
+                    label: "Average temperature",
+                    data: climateData.map(month => month.mlY_TAVG_NORMAL),
+                    borderWidth: 1,
+                    fill: "-2",
                 },
             ]
         },
         options: {
             scales: {
                 y: {
+                    title: {
+                        display: true,
+                        text: "Degrees Fahrenheit"
+                    },
                     beginAtZero: true
                 }
             }
