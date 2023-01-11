@@ -1,68 +1,48 @@
-﻿@using Highsoft.Web.Mvc.Charts
-@using Highsoft.Web.Mvc.Charts.Rendering
-@using static BucketListAdventures.Models.ClimateNormals
+﻿@using static BucketListAdventures.Models.ClimateNormals
 @model IEnumerable<MonthlyData>
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<div>
+    <canvas id="myChart"></canvas>
+</div>
 
-<script type="text/javascript">
-window.onload = function () {
-    Highcharts highcharts = new Highcharts
-    {
-        Title = new Title
-        {
-            Text = "Monthly Average Temperature",
-            X = -20
-        },
-        XAxis = new List
-        {
-            new XAxis
-            {
-                Categories = new List { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" },
-            }
-        },
-        YAxis = new List
-        {
-            new YAxis
-            {
-                Title = new YAxisTitle
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    const climateData = @Html.Raw(Json.Serialize(Model));
+    console.log(climateData)
+    const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: 
+            [
                 {
-                    Text = "Temperature (°C)"
+                label: "Max temp",
+                data: climateData.map(month => month.mlY_TMAX_NORMAL),
+                borderWidth: 1
                 },
+                {
+                label: "Min temp",
+                data: climateData.map(month => month.mlY_TMIN_NORMAL),
+                borderWidth: 1
+                },
+                {
+                label: "Avg temp",
+                data: climateData.map(month => month.mlY_TAVG_NORMAL),
+                borderWidth: 1
+                },
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
-        },
-        Tooltip = new Tooltip
-        {
-            ValueSuffix = "°F"
-        },
-        Legend = new Legend
-        {
-            Layout = LegendLayout.Vertical,
-            Align = LegendAlign.Right,
-            VerticalAlign = LegendVerticalAlign.Middle,
-            BorderWidth = 0
-        },
-        Series = new List
-        {
-            new LineSeries
-            {
-                Name = "min",
-                Data = @Model.Select(month => month.MLY_TMIN_NORMAL).ToList()
-            },
-            new LineSeries
-            {
-                Name = "max",
-                Data = @Model.Select(month => month.MLY_TMAX_NORMAL).ToList()
-            },
-            new LineSeries
-            {
-                Name = "avg",
-                Data = @Model.Select(month => month.MLY_TAVG_NORMAL).ToList()
-            },
         }
-    }
-    var renderer = new HighchartsRenderer(highcharts);
-    renderer.RenderHtml()
-};
+    });
 </script>
