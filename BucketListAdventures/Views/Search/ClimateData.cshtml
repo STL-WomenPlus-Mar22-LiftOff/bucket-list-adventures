@@ -1,0 +1,65 @@
+﻿@using Highsoft.Web.Mvc.Charts
+@using Highsoft.Web.Mvc.Charts.Rendering
+@using static BucketListAdventures.Models.ClimateNormals
+@model IEnumerable<MonthlyData>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+@{
+    var chartOptions = new Highcharts
+    {
+        Title = new Title
+        {
+            Text = "Monthly Temperature Data"
+        },
+        XAxis = new List<XAxis>
+        {
+            new XAxis
+            {
+                Categories = new List<string> { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" }
+            }
+        },
+        YAxis = new List<YAxis>
+        {
+            new YAxis
+            {
+                Title = new YAxisTitle
+                {
+                    Text = "Temperature (°F)"
+                },
+
+            }
+        },
+        Tooltip = new Tooltip {
+            PointFormat = "{series.name} for {point.x} is {point.y:,.0f}"
+        },
+        Credits = new Credits
+        {
+            Enabled = false
+        },
+        Series = new List<Series>
+        {
+            new AreaSeries
+            {
+                Name = "Average temperature",
+                Data = Model.Select(month => month.MLY_TAVG_NORMAL).ToList()
+            },
+            new AreaSeries
+            {
+                Name = "Jane",
+                Data =  as List
+            },
+            new AreaSeries
+            {
+                Name = "Joe",
+                Data =  as List
+            }
+        }
+    };
+
+    chartOptions.ID = "chart";
+    var renderer = new HighchartsRenderer(chartOptions);
+}
+
+@Html.Raw(renderer.RenderHtml())
