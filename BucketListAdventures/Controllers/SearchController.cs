@@ -19,7 +19,7 @@ namespace BucketListAdventures.Controllers
         }
 
         //TODO: convert location to nearest weather station
-        public IActionResult ClimateData(string stationId)
+        public IActionResult ClimateData(string stationId= "USC00040029")
         {
             IEnumerable<MonthlyData> data = GetClimateNormals(stationId);
             return View(data);
