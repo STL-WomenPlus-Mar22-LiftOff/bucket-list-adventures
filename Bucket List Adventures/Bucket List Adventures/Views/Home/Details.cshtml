@@ -1,0 +1,18 @@
+﻿@if (ViewBag.activityDetails != null)
+{
+    <h1>@ViewBag.activityDetails["name"]</h1>
+<p><b>Reviews:</b>@ViewBag.activityDetails["num_reviews"]</p>
+    <p><b>Location:</b>@ViewBag.activityDetails["location_string"]</p>
+    <p><b>Description:</b> @ViewBag.activityDetails["description"] </p>
+    <p>URL: @ViewBag.activityDetails["web_url"] </p>
+    /*<p>Reviews: @ViewBag.activityDetails["reviews"] </p> - this lists all.. need a for each*/
+   /* <p>Reviews: @ViewBag.activityDetails["reviews"][25]["url"] </p>*/
+    if (ViewBag.activityDetails ["photo"] != null)
+    {
+        <img src= @ViewBag.activityDetails["photo"]["images"]["medium"]["url"] alt="Img not available "/>
+
+    }
+}
+else {
+    <h1> Data is not Available </h1>
+}

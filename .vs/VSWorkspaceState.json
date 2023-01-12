@@ -1,6 +1,14 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\HelloWorld",
+    "\\HelloWorld\\Controllers",
+    "\\HelloWorld\\Models",
+    "\\HelloWorld\\obj",
+    "\\HelloWorld\\Properties",
+    "\\HelloWorld\\Views",
+    "\\HelloWorld\\Views\\Home"
   ],
+  "SelectedNode": "\\HelloWorld\\Views\\Home\\Search.cshtml",
   "PreviewInSolutionExplorer": false
 }

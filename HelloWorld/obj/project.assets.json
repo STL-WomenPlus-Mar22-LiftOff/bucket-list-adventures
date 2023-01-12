@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\morph\\.nuget\\packages\\": {}
+    "C:\\Users\\chama\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\morph\\Source\\Repos\\STL-WomenPlus-Mar22-LiftOff\\bucket-list-adventures\\HelloWorld\\HelloWorld.csproj",
+      "projectUniqueName": "C:\\Users\\chama\\OneDrive\\Documents\\Bucket-List-Adventures\\HelloWorld\\HelloWorld.csproj",
       "projectName": "HelloWorld",
-      "projectPath": "C:\\Users\\morph\\Source\\Repos\\STL-WomenPlus-Mar22-LiftOff\\bucket-list-adventures\\HelloWorld\\HelloWorld.csproj",
-      "packagesPath": "C:\\Users\\morph\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\morph\\Source\\Repos\\STL-WomenPlus-Mar22-LiftOff\\bucket-list-adventures\\HelloWorld\\obj\\",
+      "projectPath": "C:\\Users\\chama\\OneDrive\\Documents\\Bucket-List-Adventures\\HelloWorld\\HelloWorld.csproj",
+      "packagesPath": "C:\\Users\\chama\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\chama\\OneDrive\\Documents\\Bucket-List-Adventures\\HelloWorld\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\morph\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\chama\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -51,8 +51,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -64,7 +63,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

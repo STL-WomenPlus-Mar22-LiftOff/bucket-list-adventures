@@ -1,0 +1,9 @@
+﻿
+<ul>
+    @foreach (var activity in ViewBag.activitiesObject)
+    {
+        <li>
+          <a href="@Url.Action("Details","Home")?activity=@activity.name">  @activity.name </a>
+        </li>
+    }
+</ul>
