@@ -3,16 +3,24 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BucketListAdventures.Areas.Identity.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = "server=localhost;user=bucket_list_adventures;password=LiftOff2023;database=bucket_list_adventures";
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+builder.Services.AddDbContext<BucketListDbContext>(dbContextOptions => dbContextOptions.UseMySql(connectionString, serverVersion));
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
