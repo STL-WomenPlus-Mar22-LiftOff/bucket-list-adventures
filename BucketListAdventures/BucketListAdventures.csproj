@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	  <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-BucketListAdventures-2b0a88ee-303d-4e64-aee6-8d1ece0b0ce7</UserSecretsId>
   </PropertyGroup>
 
