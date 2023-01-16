@@ -7,7 +7,7 @@ using BucketListAdventures.Models;
 using BucketListAdventures.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using static BucketListAdventures.Models.ClimateNormals;
 
 namespace BucketListAdventures.Controllers
 {
@@ -16,6 +16,13 @@ namespace BucketListAdventures.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        //TODO: convert location to nearest weather station
+        public IActionResult ClimateData(string stationId= "USC00040029")
+        {
+            IEnumerable<MonthlyData> data = GetClimateNormals(stationId);
+            return View(data);
         }
     }
 }
