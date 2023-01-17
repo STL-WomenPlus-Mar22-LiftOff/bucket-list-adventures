@@ -1,0 +1,56 @@
+﻿@using static BucketListAdventures.Models.ClimateNormals
+@model IEnumerable<MonthlyData>
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    const climateData = @Html.Raw(Json.Serialize(Model));
+    console.log(climateData)
+    const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            fill: "origin",
+            datasets: 
+            [
+                {
+                    label: "Mininum temperature",
+                    data: climateData.map(month => month.mlY_TMIN_NORMAL),
+                    borderWidth: 1,
+                    fill: "origin",
+                },
+                {
+                    label: "Maximum temperature",
+                    data: climateData.map(month => month.mlY_TMAX_NORMAL),
+                    borderWidth: 1,
+                    fill: "+1",
+                },
+                {
+                    label: "Average temperature",
+                    data: climateData.map(month => month.mlY_TAVG_NORMAL),
+                    borderWidth: 1,
+                    fill: "-2",
+                },
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: "Degrees Fahrenheit"
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
