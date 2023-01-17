@@ -1,9 +1,10 @@
-﻿@*
+﻿@using BucketListAdventures.ViewModels
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-
+@model AddUserProfileViewModel;
 <form class="row g-3">
     <div class="col-12">
         <label for="inputName" class="form-label">Name</label>
@@ -20,11 +21,11 @@
     <div class="col-12">
         <label for="inputAddress2" class="form-label">Interests</label>
         <select id="inputInterests" >
-            <option value="1">Sight Seeing</option>
-            <option value="2">Adventures</option>
-            <option value="3">Hiking</option>
-            <option value="4">Skeeing</option>
-            <option value="5">Safari</option>
+            <option value="SightSeeing">Sight Seeing</option>
+            <option value="Adventures">Adventures</option>
+            <option value="Hiking">Hiking</option>
+            <option value="Skeeing">Skeeing</option>
+            <option value="Safari">Safari</option>
         </select>
     </div>
     <div class="col-12">
