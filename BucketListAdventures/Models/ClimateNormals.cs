@@ -3,6 +3,8 @@ using CsvHelper.Configuration;
 using System.Globalization;
 using System.Net;
 using System.IO;
+using Microsoft.Spatial;
+using BucketListAdventures.Data;
 
 namespace BucketListAdventures.Models
 {
@@ -17,7 +19,7 @@ namespace BucketListAdventures.Models
 
         }
 
-        public static IEnumerable<MonthlyData> GetClimateNormals(string stationId)
+        public static IEnumerable<MonthlyData> ReadCsvData(string stationId)
         {
             IEnumerable<MonthlyData> records;
 

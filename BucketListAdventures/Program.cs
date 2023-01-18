@@ -10,6 +10,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, serverVersion: ServerVersion.AutoDetect(connectionString)));
 
+builder.Services.AddScoped<ApplicationDbContext>();
+builder.Services.AddScoped<ApplicationRepository>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
