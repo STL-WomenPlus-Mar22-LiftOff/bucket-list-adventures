@@ -7,18 +7,19 @@ namespace BucketListAdventures.Data
         void SaveChages();
         UserProfile GetUserProfileByUserName(string userName);
         void AddUserProfile(UserProfile profile);
+        void UpdateUserProfile(UserProfile profile);
     }
 
     public class UserProfileRepository : IUserProfileRepository
     {
-        private readonly UserProfileDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public UserProfileRepository()
         {
 
         }
 
-        public UserProfileRepository(UserProfileDbContext context)
+        public UserProfileRepository(ApplicationDbContext context)
         {
             _context = context;
 
@@ -27,6 +28,15 @@ namespace BucketListAdventures.Data
         public void AddUserProfile(UserProfile profile)
         {
             _context.UserProfiles.Add(profile);
+        }
+
+        public void UpdateUserProfile(UserProfile profile)
+        {
+            UserProfile userProfile = GetUserProfileByUserName(profile.UserName);
+            userProfile.Address = profile.Address;
+            userProfile.Interests = profile.Interests;
+            userProfile.Name = profile.Name;
+            _context.UserProfiles.Update(userProfile);
         }
 
         public UserProfile GetUserProfileByUserName(string userName)

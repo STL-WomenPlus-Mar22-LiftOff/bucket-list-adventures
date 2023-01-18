@@ -5,22 +5,22 @@
 @{
 }
 @model AddUserProfileViewModel;
-<form class="row g-3">
+<form class="row g-3" asp-controller="UserProfile" asp-action="AddUserProfile" method="post">
     <div class="col-12">
-        <label for="inputName" class="form-label">Name</label>
-        <input type="text" class="form-control" id="inputName">
+        <label asp-for="Name" class="form-label">Name :</label>
+        <input asp-for="Name" class="form-control" />
     </div>
     <div class="col-12">
-        <label for="inputUserName" class="form-label">UserName</label>
-        <input type="text" class="form-control" id="inputUserName">
+        <label class="form-label">UserName :</label>
+        <label class="form-label">@User.Identity.Name.ToString()</label>
     </div>
     <div class="col-12">
-        <label for="inputAddress" class="form-label">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        <label asp-for="Address" class="form-label">Address :</label>
+        <input asp-for="Address" class="form-control" placeholder="1234 Main St"/>
     </div>
     <div class="col-12">
-        <label for="inputAddress2" class="form-label">Interests</label>
-        <select id="inputInterests" >
+        <label asp-for="Interests" class="form-label">Interests :</label>
+        <select asp-for="Interests" class="form-control">
             <option value="SightSeeing">Sight Seeing</option>
             <option value="Adventures">Adventures</option>
             <option value="Hiking">Hiking</option>

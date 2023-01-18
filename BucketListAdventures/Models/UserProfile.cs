@@ -1,8 +1,11 @@
-﻿namespace BucketListAdventures.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BucketListAdventures.Models
 {
     public class UserProfile
     {
         public string Name { get; set; }
+        [Key]
         public string UserName { get; set; }
         public string Address { get; set; }
         public string Interests { get; set; }
