@@ -1,5 +1,38 @@
-﻿@*
+﻿@using BucketListAdventures.ViewModels
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
+@model AddUserProfileViewModel;
+<form class="row g-3" asp-controller="UserProfile" asp-action="AddUserProfile" method="post">
+    <div class="col-12">
+        <label class="form-label">UserName :</label>
+        <label class="form-label">@User.Identity.Name.ToString()</label>
+    </div>
+    <div class="col-12">
+        <label asp-for="Name" class="form-label">Name :</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="alert-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Address" class="form-label">Address :</label>
+        <input asp-for="Address" class="form-control" placeholder="1234 Main St"/>
+        <span asp-validation-for="Address" class="alert-danger"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Interests" class="form-label">Interests :</label>
+        <select asp-for="Interests" class="form-control">
+            <option value="SightSeeing">Sight Seeing</option>
+            <option value="Adventures">Adventures</option>
+            <option value="Hiking">Hiking</option>
+            <option value="Skeeing">Skeeing</option>
+            <option value="Safari">Safari</option>
+        </select>
+        <span asp-validation-for="Interests" class="alert-danger"></span>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-secondary">Cancel</button>
+    </div>
+</form>
