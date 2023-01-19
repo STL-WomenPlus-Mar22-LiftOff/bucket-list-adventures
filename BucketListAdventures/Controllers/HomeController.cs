@@ -85,9 +85,9 @@ namespace BucketListAdventures.Controllers
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
             JObject value = JObject.Parse(body);
-            Debug.WriteLine("HELL");
-            Debug.WriteLine(value);
-            Debug.WriteLine("YES");
+            
+     
+            
             data = (JArray)value["routes"];
             return data;
         }
@@ -115,9 +115,9 @@ namespace BucketListAdventures.Controllers
             double lat = (double)LatlongObject["features"][0]["geometry"]["coordinates"][1];
             Task<JArray> Directions = GetNavigation(lon, lat);
             JArray directionsObject = Directions.Result;
-            Debug.WriteLine("HELLO");
-            Debug.WriteLine(directionsObject);
-            Debug.WriteLine("GOODBYE");
+            
+            
+       
             
             ViewBag.directionsObject = directionsObject;
 
