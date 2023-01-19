@@ -1,0 +1,14 @@
+﻿<h1>@ViewBag.title</h1>
+
+<form method="post" action="/destinations/edit">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input name="name" type="text" value="@ViewBag.destinationToEdit.Name" />
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input name="description" type="text" value="@ViewBag.destinationToEdit.Description" />
+    </div>
+    <input type="hidden" value="@ViewBag.destinationToEdit.Id" name="destinationId">
+    <input type="submit" value="Edit Destination" />
+</form>

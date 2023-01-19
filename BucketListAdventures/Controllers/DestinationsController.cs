@@ -1,6 +1,4 @@
-﻿/*
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,15 +10,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BucketListAdventures.Controllers
 {
-    public class BucketListController : Controller
+    public class DestinationsController : Controller
     {
-        static private List<Destination> Destinations = new List<Destination>();
+        private ApplicationDbContext context;
+        
+        public DestinationsController(ApplicationDbContext dbContext)
+        {
+            context = dbContext;
+        }
+
+
+        //static private List<Destination> Destinations = new List<Destination>();
 
         //GET: /<controllers>
         [HttpGet]
         public IActionResult Index()
         {
-            List<Destination> destinations = new List<Destination>(DestinationData.GetAll());
+            List<Destination> destinations = context.Destinations.ToList();
 
             return View(destinations);
         }
@@ -44,7 +50,8 @@ namespace BucketListAdventures.Controllers
                     Description = addDestinationViewModel.Description,
                 };
 
-                DestinationData.Add(newDestination);
+                context.Destinations.Add(newDestination);
+                context.SaveChanges();
 
                 return Redirect("/Destinations");
             }
@@ -54,9 +61,9 @@ namespace BucketListAdventures.Controllers
 
         public IActionResult Delete()
         {
-            List<Destination> destinations = new List<Destination>(DestinationData.GetAll());
+            ViewBag.destinations = context.Destinations.ToList();
 
-            return View(destinations);
+            return View();
         }
 
         [HttpPost]
@@ -65,17 +72,20 @@ namespace BucketListAdventures.Controllers
         {
             foreach (int destinationId in destinationIds)
             {
-                DestinationData.Remove(destinationId);
+                Destination theDestination = context.Destinations.Find(destinationId);
+                context.Destinations.Remove(theDestination);
             }
 
-            return Redirect("/Events");
+            context.SaveChanges();
+
+            return Redirect("/Destinations");
         }
 
         [HttpGet]
         [Route("Destinations/Edit/{destinationId}")]
         public IActionResult Edit(int destinationId)
         {
-            Destination editingDestination = DestinationData.GetById(destinationId);
+            Destination editingDestination = context.Destinations.Find(destinationId);
             ViewBag.destinationToEdit = editingDestination;
             ViewBag.title = "Edit Destination " + editingDestination.Name + "(id = " + editingDestination.Id + ")";
 
@@ -83,15 +93,16 @@ namespace BucketListAdventures.Controllers
         }
 
         [HttpPost]
-        [Route("Events/Edit")]
-        public IActionResult SubmitEditEventForm(int destinationId, string name, string description)
+        [Route("Destinations/Edit")]
+        public IActionResult SubmitDestinationForm(int destinationId, string name, string description)
         {
-            Destination editingDestination = DestinationData.GetById(destinationId);
+            Destination editingDestination = context.Destinations.Find(destinationId);
             editingDestination.Name = name;
             editingDestination.Description = description;
 
-            return Redirect("/Destination");
+            context.SaveChanges();
+
+            return Redirect("/Destinations");
         }
     }
 }
-*/
