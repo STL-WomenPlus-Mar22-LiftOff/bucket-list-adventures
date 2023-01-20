@@ -3,7 +3,6 @@ using CsvHelper.Configuration;
 using System.Globalization;
 using System.Net;
 using System.IO;
-using Microsoft.Spatial;
 using BucketListAdventures.Data;
 
 namespace BucketListAdventures.Models
@@ -16,7 +15,6 @@ namespace BucketListAdventures.Models
             public double MLY_TAVG_NORMAL { get; set;}
             public double MLY_TMAX_NORMAL { get; set;}
             public double MLY_TMIN_NORMAL { get; set;}
-
         }
 
         public static IEnumerable<MonthlyData> ReadCsvData(string stationId)

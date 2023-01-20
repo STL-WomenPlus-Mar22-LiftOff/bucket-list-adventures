@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.Spatial;
+using GeoCoordinatePortable;
 
 namespace BucketListAdventures.Models
 {
@@ -15,6 +15,6 @@ namespace BucketListAdventures.Models
         //elevation is in meters
         public double elevation { get; set; }
         public string station_name { get; set; }
-        public GeographyPoint geography_point => GeographyPoint.Create(latitude, longitude);
+        public GeoCoordinate geography_point => new GeoCoordinate(latitude, longitude);
     }
 }

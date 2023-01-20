@@ -1,5 +1,5 @@
 ﻿using BucketListAdventures.Models;
-using Microsoft.Spatial;
+using GeoCoordinatePortable;
 
 namespace BucketListAdventures.Data
 {
@@ -27,9 +27,9 @@ namespace BucketListAdventures.Data
         }
         public virtual WeatherStation GetNearestWeatherStation(double latitude, double longitude)
         {
-            GeographyPoint location = GeographyPoint.Create(latitude, longitude);
+            GeoCoordinate location = new GeoCoordinate(latitude, longitude);
             WeatherStation closest = GetAllWeatherStations()
-                .OrderBy(x => GeographyOperationsExtensions.Distance(x.geography_point, location))
+                .OrderBy(x => x.geography_point.GetDistanceTo(location))
                 .First();
             return closest;
         }
