@@ -1,0 +1,18 @@
+﻿@using BucketListAdventures.Models
+
+@model List<Destination>
+
+<h1>Delete Destinations</h1>
+<form method="post">
+    @foreach (var dest in ViewBag.destinations)
+    {
+        <div class="form-group">
+            <label>
+                <span>@dest.Name</span>
+                <input type="checkbox" name="DestinationIds" value="@dest.Id">
+                </label>
+            </div>
+    }
+
+    <input type="submit" value="Delete Selected Destinations" class="btn btn-danger">
+</form>
