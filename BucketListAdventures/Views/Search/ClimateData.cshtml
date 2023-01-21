@@ -10,10 +10,11 @@
 <script>
     const ctx = document.getElementById('myChart');
 
+    //this turns the c# objects into javascript objects so the chart can use them
     const climateData = @Html.Raw(Json.Serialize(Model));
-    console.log(climateData)
-    const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
+    Chart.defaults.font.size = 20;
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -22,23 +23,20 @@
             datasets: 
             [
                 {
-                    label: "Mininum temperature",
+                    label: "Mininum",
                     data: climateData.map(month => month.mlY_TMIN_NORMAL),
-                    borderWidth: 1,
-                    fill: "origin",
+                    borderColor: "rgba(255, 186, 8, 1)",
                 },
                 {
-                    label: "Maximum temperature",
-                    data: climateData.map(month => month.mlY_TMAX_NORMAL),
-                    borderWidth: 1,
-                    fill: "+1",
-                },
-                {
-                    label: "Average temperature",
+                    label: "Average",
                     data: climateData.map(month => month.mlY_TAVG_NORMAL),
-                    borderWidth: 1,
-                    fill: "-2",
+                    borderColor: "rgba(232, 93, 4, 1)",
                 },
+                {
+                    label: "Maximum",
+                    data: climateData.map(month => month.mlY_TMAX_NORMAL),
+                    borderColor: "rgba(157, 2, 8, 1)",
+                }
             ]
         },
         options: {
@@ -46,9 +44,27 @@
                 y: {
                     title: {
                         display: true,
-                        text: "Degrees Fahrenheit"
+                        text: "Temperature °F"
                     },
-                    beginAtZero: true
+                    suggestedMax: 100,
+                    beginAtZero: true,
+                }
+            },
+            datasets: {
+                line:{
+                    borderJoinStyle: "round",
+                    borderWidth: 10,
+                }
+            },
+            plugins: {
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        pointStyle: "circle",
+                        usePointStyle: true,
+                        boxHeight: 14,
+                        padding: 25,
+                    }
                 }
             }
         }
