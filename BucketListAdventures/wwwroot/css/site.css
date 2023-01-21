@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+/*using this class for home page image*/
+.responsive_image {
+    width: 80%;
+    height: auto;
+}
+

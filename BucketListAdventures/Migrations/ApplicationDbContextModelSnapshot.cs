@@ -19,6 +19,7 @@ namespace BucketListAdventures.Migrations
                 .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+
             modelBuilder.Entity("BucketListAdventures.Models.WeatherStation", b =>
                 {
                     b.Property<int>("primary_id")
@@ -45,6 +46,27 @@ namespace BucketListAdventures.Migrations
                     b.HasKey("primary_id");
 
                     b.ToTable("WeatherStations");
+
+            modelBuilder.Entity("BucketListAdventures.Models.UserProfile", b =>
+                {
+                    b.Property<string>("UserName")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Interests")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserName");
+
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

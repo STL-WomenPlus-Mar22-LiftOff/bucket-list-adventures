@@ -1,0 +1,25 @@
+﻿@model BucketListAdventures.ViewModels.AddDestinationViewModel
+
+<h1>Add A Destination</h1>
+
+<form method="post" class="form-control">
+    <div asp-controller="Destinations" asp-action="Add" class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" type="text" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="Location"></label>
+        <input asp-for="Location" type="text" />
+        <span asp-validation-for="Location"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" type="text" />
+        <span asp-validation-for="Description"></span>
+    </div>
+    <br />
+    <input type="submit" value="Add Destination" />
+</form>
