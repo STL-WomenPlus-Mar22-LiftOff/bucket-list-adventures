@@ -103,6 +103,8 @@ namespace BucketListAdventures.Controllers
             JArray activitiesObject = Activities.Result;
 
             ViewBag.activitiesObject = activitiesObject;
+            ViewBag.latitude = lat;
+            ViewBag.longitude = lon;
             return View();
         }
         [HttpPost]

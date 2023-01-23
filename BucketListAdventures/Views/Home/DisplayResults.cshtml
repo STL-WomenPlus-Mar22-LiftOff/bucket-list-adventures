@@ -1,4 +1,7 @@
-﻿
+﻿<a asp-controller="Search" asp-action="ClimateData" 
+asp-route-latitude="@ViewBag.latitude" asp-route-longitude="@ViewBag.longitude">
+Temperature data by month</a>
+
 <ul>
     @foreach (var activity in ViewBag.activitiesObject)
     {
