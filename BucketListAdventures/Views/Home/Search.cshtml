@@ -1,9 +1,31 @@
-﻿
-@using SearchActivities.ViewModel;
+﻿@using SearchActivities.ViewModel;
 @model SearchViewModel
 
-<form method="post">
+@*<form method="post">
     <p>Please Enter The City You're Considering As A Destination:</p>
     <input type= "text" name="cityName"/>
     <input type = "submit"/>
-</form>
+</form>*@
+
+<div id="autocomplete" class="autocomplete-container"></div>
+
+<script type="text/javascript">
+    //the name of the package starts with the "at" symbol, so i need to add a second one to escape it
+    import { GeocoderAutocomplete } from '@@geoapify/geocoder-autocomplete';
+
+    const autocomplete = new GeocoderAutocomplete(
+        document.getElementById("autocomplete"), 
+        "@Model.ApiKey", 
+        {
+            type: "city",
+            lang: "en",
+            skipDetails: true,
+            filter: {
+                countrycode: "us"
+            }
+        });
+
+    autocomplete.on('select', (location) => {
+    // check selected location here
+    });
+</script>

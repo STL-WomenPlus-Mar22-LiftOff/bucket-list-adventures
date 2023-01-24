@@ -24,3 +24,7 @@ body {
     height: auto;
 }
 
+/*this is for geocoding autocomplete*/
+.autocomplete-container {
+    position: relative;
+}
