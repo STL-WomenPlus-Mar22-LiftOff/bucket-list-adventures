@@ -9,11 +9,12 @@
 
 <div id="autocomplete" class="autocomplete-container"></div>
 
-<script type="text/javascript">
-    //the name of the package starts with the "at" symbol, so i need to add a second one to escape it
-    import { GeocoderAutocomplete } from '@@geoapify/geocoder-autocomplete';
+@*the name of the package starts with the "at" symbol, so i need to add a second one to escape it*@
+<script src=@@geoapify/geocoder-autocomplete type="module"></script>
 
-    const autocomplete = new GeocoderAutocomplete(
+<script type="text/javascript">
+
+    const autocompleteInput = new autocomplete.GeocoderAutocomplete(
         document.getElementById("autocomplete"), 
         "@Model.ApiKey", 
         {
@@ -25,7 +26,7 @@
             }
         });
 
-    autocomplete.on('select', (location) => {
+    autocompleteInput.on('select', (location) => {
     // check selected location here
     });
 </script>
