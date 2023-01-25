@@ -1,4 +1,5 @@
 ﻿using BucketListAdventures.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BucketListAdventures.Data
 {
@@ -27,6 +28,10 @@ namespace BucketListAdventures.Data
 
         public void AddUserProfile(UserProfile profile)
         {
+            foreach (var item in profile.Interests)
+            {
+                _context.UserInterests.Add(item);
+            }
             _context.UserProfiles.Add(profile);
         }
 
@@ -41,7 +46,8 @@ namespace BucketListAdventures.Data
 
         public UserProfile GetUserProfileByUserName(string userName)
         {
-            return _context.UserProfiles.FirstOrDefault(x => x.UserName == userName);
+            return _context.UserProfiles.Include(j => j.Interests).
+                FirstOrDefault(x => x.UserName == userName);
         }
 
         public void SaveChages()

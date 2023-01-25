@@ -24,13 +24,14 @@ namespace BucketListAdventures.Controllers
         public IActionResult Index()
         {
             AddUserProfileViewModel viewModel = new AddUserProfileViewModel();
+            string[] userInterests = { "Beaches", "Mountains", "Concerts", "Hiking", "Skiing", "Snorkeling", "Scuba Diving", "Amusement Parks", "Museums", "Zoo's", "Water Sports", "Boat tours", "Historical Landmarks", "National Parks", "Nature Wildlife Areas", "Hidden Gems", "Adventurous", "Budget Friendly", "Good for Kids", "Body of Waters", "Water Parks", "Nightlife", "Events", "Shopping", "Winery's", "Golf", "Aquariums", "Botanical Gardens", "Gambling", "Haunted Tours" };
             UserProfile userProfile = _repository.GetUserProfileByUserName(User.Identity.Name.ToString());
             if (userProfile != null)
             {
                 viewModel.Address = userProfile.Address;
                 viewModel.Name = userProfile.Name;
-                viewModel.Interests = userProfile.Interests;
             }
+            viewModel.UserInterests = GetUserInterestsFromUserProfile(userProfile, userInterests);
             return View(viewModel);
         }
 
@@ -46,14 +47,14 @@ namespace BucketListAdventures.Controllers
                     userProfileToSave.UserName = User.Identity.Name.ToString();
                     userProfileToSave.Address = addUserProfileViewModel.Address;
                     userProfileToSave.Name = addUserProfileViewModel.Name;
-                    userProfileToSave.Interests = addUserProfileViewModel.Interests;
+                    userProfileToSave.Interests = GetUserInterestsFromViewModel(addUserProfileViewModel);
                     _repository.AddUserProfile(userProfileToSave);
                 }
                 else
                 {
                     userProfileToSave.Address = addUserProfileViewModel.Address;
                     userProfileToSave.Name = addUserProfileViewModel.Name;
-                    userProfileToSave.Interests = addUserProfileViewModel.Interests;
+                    userProfileToSave.Interests = GetUserInterestsFromViewModel(addUserProfileViewModel);
                     _repository.UpdateUserProfile(userProfileToSave);
 
                 }
@@ -61,6 +62,29 @@ namespace BucketListAdventures.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View("Index", addUserProfileViewModel);
+        }
+
+        private List<UserInterest> GetUserInterestsFromViewModel(AddUserProfileViewModel addUserProfileViewModel)
+        {
+            List<UserInterest> userInterests = new List<UserInterest>();
+            foreach (var item in addUserProfileViewModel.Interests)
+            {
+                userInterests.Add(new UserInterest(User.Identity.Name.ToString(), item));
+            }
+            return userInterests;
+        }
+
+        private List<AddUserInterestsViewModel> GetUserInterestsFromUserProfile(UserProfile userProfile, string[] userInterestsList)
+        {
+            List<AddUserInterestsViewModel> addUserInterestsViewModels = new List<AddUserInterestsViewModel>();
+            if (userProfile != null && userProfile.Interests != null && userProfile.Interests.Count > 0)
+            {
+                foreach (var item in userInterestsList)
+                {
+                    addUserInterestsViewModels.Add(new AddUserInterestsViewModel(item, userProfile.Interests.Any(x => x.Interest.Equals(item))));
+                }
+            }
+            return addUserInterestsViewModels;
         }
     }
 }
