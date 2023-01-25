@@ -13,16 +13,24 @@ namespace BucketListAdventures.Controllers
 {
     public class SearchController : Controller
     {
+        ClimateNormals climateNormals = new ClimateNormals();
+        private ApplicationRepository _repo;
+
+        public SearchController(ApplicationRepository repo)
+        {
+            _repo = repo;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        //TODO: convert location to nearest weather station
-        public IActionResult ClimateData(string stationId= "USC00040029")
+        public IActionResult ClimateData(double latitude, double longitude)
         {
-            IEnumerable<MonthlyData> data = GetClimateNormals(stationId);
-            return View(data);
+            WeatherStation closest_station = _repo.GetNearestWeatherStation(latitude, longitude);
+            IEnumerable<MonthlyData> climateData = ReadCsvData(closest_station.station_id);
+            return View(climateData);
         }
     }
 }

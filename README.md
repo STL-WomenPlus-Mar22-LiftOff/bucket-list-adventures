@@ -44,4 +44,4 @@ We want to give the average traveler more time to pack and less time planning. T
 * Results page (navigation?)
 
 ## WireFrames
-Find our wireframes [here](https://drive.google.com/file/d/1w4oBo2SCoq4cRwhafN3rzXnn3fco5Rhf/view?usp=sharing)
+Find our wireframes [here](https://drive.google.com/file/d/1w4oBo2SCoq4cRwhafN3rzXnn3fco5Rhf/view?usp=share_link)

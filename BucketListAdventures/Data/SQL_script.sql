@@ -6,8 +6,9 @@ description VARCHAR (255)
 );
 
 CREATE TABLE userprofiles (
-name VARCHAR (80),
-username VARCHAR (80),
-address VARCHAR (80),
-interests VARCHAR (200)
+name longtext,
+username varchar(255) NOT NULL,
+address longtext,
+interests longtext,
+PRIMARY KEY (`username`)
 );

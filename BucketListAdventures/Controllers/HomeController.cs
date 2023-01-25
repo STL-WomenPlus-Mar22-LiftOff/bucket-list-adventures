@@ -103,7 +103,7 @@ namespace BucketListAdventures.Controllers
             JArray activitiesObject = Activities.Result;
 
             ViewBag.activitiesObject = activitiesObject;
- 
+
             return View();
         }
         [HttpPost]
