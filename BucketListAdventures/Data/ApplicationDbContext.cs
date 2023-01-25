@@ -9,6 +9,8 @@ namespace BucketListAdventures.Data
 
         public DbSet<UserProfile> UserProfiles { get; set; }
 
+        public DbSet<UserInterest> UserInterests { get; set; }
+
         public DbSet<Destination> Destinations { get; set; }
         
         public DbSet<WeatherStation> WeatherStations { get; set; }
