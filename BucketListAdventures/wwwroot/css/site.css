@@ -24,3 +24,22 @@ body {
     height: auto;
 }
 
+.search-result-container {
+    padding: 0.3em;
+}
+
+.search-result {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: #efe4de;
+    border-radius: 5px;
+    padding: 0.7em;
+    cursor: pointer;
+}
+
+.search-result a {
+    display: block;
+    color: #666666;
+    text-decoration: none;
+}
