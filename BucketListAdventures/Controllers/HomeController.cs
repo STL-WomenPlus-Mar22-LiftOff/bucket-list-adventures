@@ -103,8 +103,7 @@ namespace BucketListAdventures.Controllers
             JArray activitiesObject = Activities.Result;
 
             ViewBag.activitiesObject = activitiesObject;
-            ViewBag.latitude = lat;
-            ViewBag.longitude = lon;
+
             return View();
         }
         [HttpPost]
@@ -117,10 +116,11 @@ namespace BucketListAdventures.Controllers
             double lat = (double)LatlongObject["features"][0]["geometry"]["coordinates"][1];
             Task<JArray> Directions = GetNavigation(lon, lat);
             JArray directionsObject = Directions.Result;
-            
-            
-       
-            
+            ViewBag.lon = lon;
+            ViewBag.lat = lat;
+
+
+
             ViewBag.directionsObject = directionsObject;
 
 
