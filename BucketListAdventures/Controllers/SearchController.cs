@@ -25,13 +25,6 @@ namespace BucketListAdventures.Controllers
         {
             return View();
         }
-
-        public IActionResult ClimateData(double latitude, double longitude)
-        {
-            WeatherStation closest_station = _repo.GetNearestWeatherStation(latitude, longitude);
-            IEnumerable<MonthlyData> climateData = ReadCsvData(closest_station.station_id);
-            return View(climateData);
-        }
     }
 }
 
