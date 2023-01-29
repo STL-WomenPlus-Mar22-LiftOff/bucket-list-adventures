@@ -28,7 +28,6 @@
     const climateData = @Html.Raw(Json.Serialize(ViewBag.climateData));
     const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-    Chart.defaults.font.size = 20;
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -54,37 +53,105 @@
                 ]
         },
         options: {
+            aspectRatio: 1.6,
             scales: {
                 y: {
                     title: {
                         display: true,
-                        text: "Temperature °F"
+                        text: "Temperature °F",
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 30);
+                            return {
+                                weight: 'normal',
+                                size: size,
+                            };
+                        }
+                    },
+                    ticks: {
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 35);
+                            return {
+                                weight: 'normal',
+                                size: size,
+                            };
+                        }
                     },
                     suggestedMax: 100,
                     beginAtZero: true,
-                }
+                },
+                x: {
+                    ticks: {
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 35);
+                            return {
+                                weight: 'normal',
+                                size: size,
+                            };
+                        }
+                    }
+                },
             },
             datasets: {
                 line: {
                     borderJoinStyle: "round",
-                    borderWidth: 10,
+                    borderWidth: function (context) {
+                        var width = context.chart.width;
+                        var size = Math.round(width / 150);
+                        return size
+                    },
                 }
             },
             plugins: {
                 legend: {
                     position: "bottom",
-                    labels: {
+                     labels: {
                         pointStyle: "circle",
                         usePointStyle: true,
-                        boxHeight: 14,
-                        padding: 25,
+                        boxHeight: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 60);
+                            return size
+                        },
+                        padding: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 60);
+                            return size
+                        },
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 30);
+                            return {
+                                weight: 'normal',
+                                size: size,
+                            }
+                        },
                     }
                 },
                 title: {
                     display: true,
                     position: "top",
                     align: "center",
-                    text: "Average Temperature by Month"
+                    text: "Average Temperature by Month",
+                    font: function (context) {
+                        var width = context.chart.width;
+                        var size = Math.round(width / 26);
+                        return {
+                            weight: 'normal',
+                            size: size,
+                        }
+                    },
+                }
+            },
+            elements: {
+                point: {
+                    pointRadius: function (context) {
+                        var width = context.chart.width;
+                        var size = Math.round(width / 150);
+                        return size
+                    }
                 }
             }
         }

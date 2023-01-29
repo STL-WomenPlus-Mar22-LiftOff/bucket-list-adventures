@@ -45,5 +45,5 @@ body {
 }
 
 #myChart {
-    
+    display: inline-block !important;
 }
