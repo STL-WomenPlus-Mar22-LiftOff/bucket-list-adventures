@@ -61,7 +61,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhbWFuZWJhcmJhdHRpIiwiYSI6ImNsY3FqcW9rZTA2a
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v12',
-  center: [-90.199585,38.626426], // starting position
+  center: [@ViewBag.homeAddresslon,@ViewBag.homeAddresslat], // starting position
   zoom: 12
 });
 // set the bounds of the map
@@ -73,7 +73,7 @@ const map = new mapboxgl.Map({
 
 // an arbitrary start will always be the same
 // only the end or destination will change
-const start = [-90.199585,38.626426];
+const start = [@ViewBag.homeAddresslon,@ViewBag.homeAddresslat];
 
 // this is where the code for the next step will go
 

@@ -118,9 +118,17 @@ namespace BucketListAdventures.Controllers
             JArray directionsObject = Directions.Result;
             ViewBag.lon = lon;
             ViewBag.lat = lat;
-
-
-
+            // Code for getting the address from the database goes here.
+         // string homeAddress = "16 sunview lane, st louis";
+            string homeAddress = "3915 Taplin Court  Bridgeton MO. 63044";
+            Task<JObject> homeAddressLatLong = GetLatLong(homeAddress);
+            JObject homeAddressLatlongObject = homeAddressLatLong.Result;
+            double homeAddresslon = (double)homeAddressLatlongObject["features"][0]["geometry"]["coordinates"][0];
+            double homeAddresslat = (double)homeAddressLatlongObject["features"][0]["geometry"]["coordinates"][1];
+            Debug.WriteLine(homeAddresslon);
+            Debug.WriteLine(homeAddresslat);
+            ViewBag.homeAddresslon = homeAddresslon;
+            ViewBag.homeAddresslat = homeAddresslat;
             ViewBag.directionsObject = directionsObject;
 
 
