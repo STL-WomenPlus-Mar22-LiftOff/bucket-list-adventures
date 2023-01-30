@@ -16,6 +16,26 @@ namespace BucketListAdventures.Controllers
 {
     public class SearchHotelsController : Controller
     {
+
+        private readonly ILogger<SearchHotelsController> _logger;
+        private static JArray data;
+        public SearchHotelsController(ILogger<SearchHotelsController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Route("/home/hotel")]
         public static FindAHotel(string cityName)
         {
             var client = new HttpClient();
@@ -33,7 +53,7 @@ namespace BucketListAdventures.Controllers
             {
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(body);
+                return body;
             }
         }
     } 
