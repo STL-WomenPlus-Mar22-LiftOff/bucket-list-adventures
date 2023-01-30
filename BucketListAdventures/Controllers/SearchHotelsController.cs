@@ -34,7 +34,7 @@ namespace BucketListAdventures.Controllers
             return View();
         }
 
-        [HttpGet]
+      /*  [HttpGet]
         [Route("/home/hotel")]
         public static FindAHotel(string cityName)
         {
@@ -55,6 +55,6 @@ namespace BucketListAdventures.Controllers
                 var body = await response.Content.ReadAsStringAsync();
                 return body;
             }
-        }
+        }*/
     } 
 }   
