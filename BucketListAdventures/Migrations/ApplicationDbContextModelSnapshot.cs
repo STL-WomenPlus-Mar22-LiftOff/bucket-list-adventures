@@ -44,7 +44,8 @@ namespace BucketListAdventures.Migrations
 
             modelBuilder.Entity("BucketListAdventures.Models.UserInterest", b =>
                 {
-                    b.Property<string>("UserName")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Interest")
@@ -55,7 +56,7 @@ namespace BucketListAdventures.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("UserName");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserProfileUserName");
 
