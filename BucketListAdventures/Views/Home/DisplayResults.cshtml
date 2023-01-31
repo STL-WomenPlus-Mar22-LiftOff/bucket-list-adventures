@@ -1,12 +1,162 @@
-﻿<a asp-controller="Search" asp-action="ClimateData" 
-asp-route-latitude="@ViewBag.latitude" asp-route-longitude="@ViewBag.longitude">
-Temperature data by month</a>
 
-<ul>
-    @foreach (var activity in ViewBag.activitiesObject)
-    {
-            <li>
-                <a href="@Url.Action("Details","Home")?activity=@activity.name">  @activity.name </a>
-            </li>
-    }
-</ul>
+﻿<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h1>Activities at destination:</h1>
+        @foreach (var activity in ViewBag.activitiesObject)
+        {
+            <div class="col-12 col-md-4 col-lg-3 search-result-container">
+                <div class="search-result">
+                    <a href="@Url.Action("Details","Home")?activity=@activity.name">  @activity.name </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    //this turns the c# objects into javascript objects so the chart can use them
+    const climateData = @Html.Raw(Json.Serialize(ViewBag.climateData));
+    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            fill: "origin",
+            datasets:
+                [
+                    {
+                        label: "Mininum",
+                        data: climateData.map(month => month.mlY_TMIN_NORMAL),
+                        borderColor: "rgba(255, 186, 8, 1)",
+                    },
+                    {
+                        label: "Average",
+                        data: climateData.map(month => month.mlY_TAVG_NORMAL),
+                        borderColor: "rgba(232, 93, 4, 1)",
+                    },
+                    {
+                        label: "Maximum",
+                        data: climateData.map(month => month.mlY_TMAX_NORMAL),
+                        borderColor: "rgba(157, 2, 8, 1)",
+                    }
+                ]
+        },
+        options: {
+            aspectRatio: 1.6,
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: "Temperature °F",
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 30);
+                            return {
+                                weight: 'normal',
+                                size: size,
+                            };
+                        }
+                    },
+                    ticks: {
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 35);
+                            return {
+                                weight: 'normal',
+                                size: size,
+                            };
+                        }
+                    },
+                    suggestedMax: 100,
+                    beginAtZero: true,
+                },
+                x: {
+                    ticks: {
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 35);
+                            return {
+                                weight: 'normal',
+                                size: size,
+                            };
+                        }
+                    }
+                },
+            },
+            datasets: {
+                line: {
+                    borderJoinStyle: "round",
+                    borderWidth: function (context) {
+                        var width = context.chart.width;
+                        var size = Math.round(width / 150);
+                        return size
+                    },
+                }
+            },
+            plugins: {
+                legend: {
+                    position: "bottom",
+                     labels: {
+                        pointStyle: "circle",
+                        usePointStyle: true,
+                        boxHeight: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 60);
+                            return size
+                        },
+                        padding: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 60);
+                            return size
+                        },
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 30);
+                            return {
+                                weight: 'normal',
+                                size: size,
+                            }
+                        },
+                    }
+                },
+                title: {
+                    display: true,
+                    position: "top",
+                    align: "center",
+                    text: "Average Temperature by Month",
+                    font: function (context) {
+                        var width = context.chart.width;
+                        var size = Math.round(width / 26);
+                        return {
+                            weight: 'normal',
+                            size: size,
+                        }
+                    },
+                }
+            },
+            elements: {
+                point: {
+                    pointRadius: function (context) {
+                        var width = context.chart.width;
+                        var size = Math.round(width / 150);
+                        return size
+                    }
+                }
+            }
+        }
+    });
+</script>
+    
+

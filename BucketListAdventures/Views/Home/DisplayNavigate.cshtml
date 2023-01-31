@@ -6,53 +6,25 @@
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        height:60%;
-        width: 60%;
-        display:block;
-        margin-top:5%;
-
-        
-        
-      }
-      #instructions {
-  position: absolute;
-  margin-left: 65%;
-  width: 25%;
-  top: 0;
-  bottom: 20%;
-  padding: 20px;
-  background-color: #fff;
-  overflow-y: scroll;
-  font-family: sans-serif;
-}
-    </style>
   </head>
   <body>
-<!--
-  <ul>
-  @foreach (var routes in ViewBag.directionsObject)
-    {
-            <li>
-                
-                @routes.geometry
-            </li>
-    }
-</ul> -->
-    <div id='map'></div>
-    <div id="instructions">
+      <div id="map-container">
 
+      @*<ul>
+        @foreach (var routes in ViewBag.directionsObject)
+          {
+                  <li>
+              
+                      @routes.geometry
+                  </li>
+          }
+      </ul>*@ 
+
+      <div id='map'></div>
+      <div id="instructions" class="overflow-auto">
+
+      </div>
     </div>
-
     <script>
     // add the JavaScript here
 

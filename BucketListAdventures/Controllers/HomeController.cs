@@ -1,9 +1,11 @@
-﻿using BucketListAdventures.Models;
+﻿using BucketListAdventures.Data;
+using BucketListAdventures.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
 using System.Diagnostics;
 using System.Linq;
+using static BucketListAdventures.Models.ClimateNormals;
 
 namespace BucketListAdventures.Controllers
 {
@@ -11,9 +13,12 @@ namespace BucketListAdventures.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private static JArray data;
-        public HomeController(ILogger<HomeController> logger)
+        ClimateNormals climateNormals = new ClimateNormals();
+        private ApplicationRepository _repo;
+        public HomeController(ILogger<HomeController> logger, ApplicationRepository repo)
         {
             _logger = logger;
+            _repo = repo;
         }
 
         public IActionResult Index()
@@ -103,6 +108,11 @@ namespace BucketListAdventures.Controllers
             Task<JArray> Activities = GetActivities(lon, lat);
             JArray activitiesObject = Activities.Result;
             ViewBag.activitiesObject = activitiesObject.Where(activity => (activity["name"] != null));
+
+            WeatherStation closest_station = _repo.GetNearestWeatherStation(lat, lon);
+            IEnumerable<MonthlyData> climateData = ReadCsvData(closest_station.station_id);
+            ViewBag.climateData = climateData;
+
             return View();
         }
         [HttpPost]
