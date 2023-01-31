@@ -8,9 +8,9 @@ namespace BucketListAdventures.Models
         [Key]
         public string UserName { get; set; }
         public string Address { get; set; }
-        public string Interests { get; set; }
+        public List<UserInterest> Interests { get; set; }
 
-        public UserProfile(string name, string username, string address, string interests)
+        public UserProfile(string name, string username, string address, List<UserInterest> interests) : this()
         {
             Name = name;
             UserName = username;
@@ -20,7 +20,7 @@ namespace BucketListAdventures.Models
 
         public UserProfile()
         {
-
+            Interests = new List<UserInterest>();   
         }
     }
 }
