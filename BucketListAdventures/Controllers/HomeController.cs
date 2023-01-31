@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace BucketListAdventures.Controllers
 {
@@ -102,7 +103,7 @@ namespace BucketListAdventures.Controllers
             Task<JArray> Activities = GetActivities(lon, lat);
             JArray activitiesObject = Activities.Result;
 
-            ViewBag.activitiesObject = activitiesObject.Where(activity => !string.IsNullOrEmpty((string)activity["name"]));
+            ViewBag.activitiesObject = activitiesObject.Where(activity => !string.IsNullOrEmpty(activity["name"].ToString()));
 
             return View();
         }
@@ -130,14 +131,8 @@ namespace BucketListAdventures.Controllers
         [Route("/home/details")]
         public IActionResult Details(string activity)
         {
-            foreach (var activityDetail in data)
-            {
-                if (activity == (string)activityDetail["name"])
-                {
-                    ViewBag.activityDetails = activityDetail;
-                    return View();
-                }
-            }
+            JToken activityDetail = data.Where(x => x["name"].ToString() == activity).First();
+            ViewBag.activityDetail = activityDetail;
             return View();
         }
 
