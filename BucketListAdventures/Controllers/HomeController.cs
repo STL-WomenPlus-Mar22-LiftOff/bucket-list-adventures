@@ -102,9 +102,8 @@ namespace BucketListAdventures.Controllers
             double lat = (double)LatlongObject["features"][0]["geometry"]["coordinates"][1];
             Task<JArray> Activities = GetActivities(lon, lat);
             JArray activitiesObject = Activities.Result;
-
-            ViewBag.activitiesObject = activitiesObject.Where(activity => !string.IsNullOrEmpty(activity["name"].ToString()));
-
+            Console.WriteLine(activitiesObject);
+            ViewBag.activitiesObject = activitiesObject.Where(activity => (activity["name"] != null));
             return View();
         }
         [HttpPost]
@@ -131,7 +130,7 @@ namespace BucketListAdventures.Controllers
         [Route("/home/details")]
         public IActionResult Details(string activity)
         {
-            JToken activityDetail = data.Where(x => x["name"].ToString() == activity).First();
+            JToken activityDetail = data.Where(x => x["name"] != null && x["name"].ToString() == activity).First();
             ViewBag.activityDetail = activityDetail;
             return View();
         }
