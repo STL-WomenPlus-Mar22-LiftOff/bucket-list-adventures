@@ -102,7 +102,7 @@ namespace BucketListAdventures.Controllers
             Task<JArray> Activities = GetActivities(lon, lat);
             JArray activitiesObject = Activities.Result;
 
-            ViewBag.activitiesObject = activitiesObject;
+            ViewBag.activitiesObject = activitiesObject.Where(activity => !string.IsNullOrEmpty((string)activity["name"]));
 
             return View();
         }
