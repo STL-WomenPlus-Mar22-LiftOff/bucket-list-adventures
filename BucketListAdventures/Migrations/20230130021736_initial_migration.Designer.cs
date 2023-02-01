@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketListAdventures.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230118064952_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230130021736_initial_migration")]
+    partial class initial_migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,96 @@ namespace BucketListAdventures.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("BucketListAdventures.Models.Destination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Destinations");
+                });
+
+            modelBuilder.Entity("BucketListAdventures.Models.UserInterest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Interest")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserProfileUserName")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserProfileUserName");
+
+                    b.ToTable("UserInterests");
+                });
+
+            modelBuilder.Entity("BucketListAdventures.Models.UserProfile", b =>
+                {
+                    b.Property<string>("UserName")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserName");
+
+                    b.ToTable("UserProfiles");
+                });
+
+            modelBuilder.Entity("BucketListAdventures.Models.WeatherStation", b =>
+                {
+                    b.Property<int>("primary_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<double>("elevation")
+                        .HasColumnType("double");
+
+                    b.Property<double>("latitude")
+                        .HasColumnType("double");
+
+                    b.Property<double>("longitude")
+                        .HasColumnType("double");
+
+                    b.Property<string>("station_id")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("station_name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("primary_id");
+
+                    b.ToTable("WeatherStations");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -217,6 +307,17 @@ namespace BucketListAdventures.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BucketListAdventures.Models.UserInterest", b =>
+                {
+                    b.HasOne("BucketListAdventures.Models.UserProfile", "UserProfile")
+                        .WithMany("Interests")
+                        .HasForeignKey("UserProfileUserName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -266,6 +367,11 @@ namespace BucketListAdventures.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BucketListAdventures.Models.UserProfile", b =>
+                {
+                    b.Navigation("Interests");
                 });
 #pragma warning restore 612, 618
         }
