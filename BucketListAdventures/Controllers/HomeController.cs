@@ -1,4 +1,5 @@
-﻿using BucketListAdventures.Models;
+﻿using BucketListAdventures.Data;
+using BucketListAdventures.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
@@ -8,11 +9,15 @@ namespace BucketListAdventures.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserProfileRepository _repository;
+
+ 
         private readonly ILogger<HomeController> _logger;
         private static JArray data;
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUserProfileRepository repository)
         {
             _logger = logger;
+            _repository = repository;
         }
 
         public IActionResult Index()
@@ -108,8 +113,10 @@ namespace BucketListAdventures.Controllers
         }
         [HttpPost]
         [Route("/home/navigate")]
+
         public IActionResult DisplayNavigate(SearchViewModel searchViewModel)
         {
+
             Task<JObject> LatLong = GetLatLong(searchViewModel.CityName);
             JObject LatlongObject = LatLong.Result;
             double lon = (double)LatlongObject["features"][0]["geometry"]["coordinates"][0];
@@ -118,15 +125,25 @@ namespace BucketListAdventures.Controllers
             JArray directionsObject = Directions.Result;
             ViewBag.lon = lon;
             ViewBag.lat = lat;
+
+           UserProfile userProfile = _repository.GetUserProfileByUserName(User.Identity.Name.ToString());
+            if (userProfile != null)
+            {
+                ViewBag.Address = userProfile.Address;
+                ViewBag.Name = userProfile.Name;
+            }
             // Code for getting the address from the database goes here.
-         // string homeAddress = "16 sunview lane, st louis";
-            string homeAddress = "3915 Taplin Court  Bridgeton MO. 63044";
+            
+       
+            string homeAddress = ViewBag.Address;
+            
             Task<JObject> homeAddressLatLong = GetLatLong(homeAddress);
             JObject homeAddressLatlongObject = homeAddressLatLong.Result;
             double homeAddresslon = (double)homeAddressLatlongObject["features"][0]["geometry"]["coordinates"][0];
             double homeAddresslat = (double)homeAddressLatlongObject["features"][0]["geometry"]["coordinates"][1];
-            Debug.WriteLine(homeAddresslon);
-            Debug.WriteLine(homeAddresslat);
+            
+            
+           
             ViewBag.homeAddresslon = homeAddresslon;
             ViewBag.homeAddresslat = homeAddresslat;
             ViewBag.directionsObject = directionsObject;
