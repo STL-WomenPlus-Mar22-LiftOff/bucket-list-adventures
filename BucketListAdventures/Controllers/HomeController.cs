@@ -1,4 +1,5 @@
 ﻿using BucketListAdventures.Models;
+using BucketListAdventures.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
@@ -39,6 +40,8 @@ namespace BucketListAdventures.Controllers
             SearchViewModel searchViewModel = new();
             return View(searchViewModel);
         }
+
+
         public static async Task<JObject> GetLatLong(string city)
         {
             string accessToken = "pk.eyJ1IjoiY2hhbWFuZWJhcmJhdHRpIiwiYSI6ImNsY3FqcW9rZTA2aW4zcXBoMGx2eTBwNm0ifQ.LFRkBS7N5yGXvCQ_F5cF9g";
