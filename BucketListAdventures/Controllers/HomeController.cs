@@ -1,4 +1,5 @@
-﻿using BucketListAdventures.Models;
+﻿using BucketListAdventures.Data;
+using BucketListAdventures.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
@@ -9,10 +10,12 @@ namespace BucketListAdventures.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUserProfileRepository _userProfileRepository;
         private static JArray data;
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUserProfileRepository userProfileRepository)
         {
             _logger = logger;
+            _userProfileRepository = userProfileRepository; 
         }
 
         public IActionResult Index()
@@ -49,6 +52,29 @@ namespace BucketListAdventures.Controllers
             JObject position = JObject.Parse(responseString);
             return position;
         }
+
+        public static async Task<JToken> GetFlightDetails(string destination)
+        {
+            var client = new HttpClient();
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/airports/search?query={destination}&locale=en_US"),
+                Headers =
+                    {
+                        { "X-RapidAPI-Key", "dce4b6271amshaa9de90c4bf28fdp144949jsn5e10c62a17bf" },
+                        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
+                    },
+            };
+            using var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JArray value = JArray.Parse(body);
+            //data = value[0];
+            return value[0];
+        }
+
         public static async Task<JArray> GetActivities(double lon, double lat)
         {
             var client = new HttpClient();
@@ -145,8 +171,20 @@ namespace BucketListAdventures.Controllers
         [Route("/home/searchtravellers")]
         public IActionResult SearchTravellers()
         {
-            SearchViewModel searchViewModel = new();
-            return View(searchViewModel);
+            SearchTravellerViewModel SearchTravellerViewModel = new();
+            SearchTravellerViewModel.CurrentLocation = _userProfileRepository.GetUserProfileByUserName(User.Identity.Name.ToString()).AirLineCode;
+            return View(SearchTravellerViewModel);
+        }
+
+        [HttpPost]
+        [Route("/home/searchtravellers")]
+        public IActionResult DisplayResultsForTraveller(SearchTravellerViewModel searchTravellerViewModel)
+        {
+            Task<JToken> Activities = GetFlightDetails(searchTravellerViewModel.DesiredDestination);
+            JToken activitiesObject = Activities.Result;
+
+            ViewBag.activitiesObject = activitiesObject;
+            return View();
         }
 
 

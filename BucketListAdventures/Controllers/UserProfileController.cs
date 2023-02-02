@@ -30,6 +30,7 @@ namespace BucketListAdventures.Controllers
             {
                 viewModel.Address = userProfile.Address;
                 viewModel.Name = userProfile.Name;
+                viewModel.AirLineCode = userProfile.AirLineCode;
             }
             viewModel.UserInterests = GetUserInterestsFromUserProfile(userProfile, userInterests);
             return View(viewModel);
@@ -48,6 +49,7 @@ namespace BucketListAdventures.Controllers
                     userProfileToSave.Address = addUserProfileViewModel.Address;
                     userProfileToSave.Name = addUserProfileViewModel.Name;
                     userProfileToSave.Interests = GetUserInterestsFromViewModel(addUserProfileViewModel);
+                    userProfileToSave.AirLineCode = addUserProfileViewModel.AirLineCode;
                     _repository.AddUserProfile(userProfileToSave);
                 }
                 else
@@ -55,6 +57,7 @@ namespace BucketListAdventures.Controllers
                     userProfileToSave.Address = addUserProfileViewModel.Address;
                     userProfileToSave.Name = addUserProfileViewModel.Name;
                     userProfileToSave.Interests = GetUserInterestsFromViewModel(addUserProfileViewModel);
+                    userProfileToSave.AirLineCode = addUserProfileViewModel.AirLineCode;
                     _repository.UpdateUserProfile(userProfileToSave);
 
                 }

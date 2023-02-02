@@ -10,12 +10,15 @@ namespace BucketListAdventures.Models
         public string Address { get; set; }
         public List<UserInterest> Interests { get; set; }
 
-        public UserProfile(string name, string username, string address, List<UserInterest> interests) : this()
+        public string AirLineCode { get; set; }
+
+        public UserProfile(string name, string username, string address, List<UserInterest> interests, string airLineCode) : this()
         {
             Name = name;
             UserName = username;
             Address = address;
             Interests = interests;
+            AirLineCode = airLineCode;
         }
 
         public UserProfile()
