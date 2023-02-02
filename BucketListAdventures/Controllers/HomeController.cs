@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
 using System.Diagnostics;
+using System.Linq;
 using static BucketListAdventures.Models.ClimateNormals;
 
 namespace BucketListAdventures.Controllers
@@ -53,7 +54,7 @@ namespace BucketListAdventures.Controllers
         {
             string accessToken = "pk.eyJ1IjoiY2hhbWFuZWJhcmJhdHRpIiwiYSI6ImNsY3FqcW9rZTA2aW4zcXBoMGx2eTBwNm0ifQ.LFRkBS7N5yGXvCQ_F5cF9g";
             HttpClient clientName = new();
-            string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{city}.json?access_token={accessToken}";
+            string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{city}.json?types=place,locality&country=us&access_token={accessToken}";
             HttpResponseMessage responseName = await clientName.GetAsync(url);
             string responseString = await responseName.Content.ReadAsStringAsync();
             JObject position = JObject.Parse(responseString);
@@ -68,10 +69,10 @@ namespace BucketListAdventures.Controllers
                 Method = HttpMethod.Get,
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng?longitude={lon}&latitude={lat}&lunit=km&currency=USD&lang=en_US"),
                 Headers =
-    {
-        { "X-RapidAPI-Key", "dce4b6271amshaa9de90c4bf28fdp144949jsn5e10c62a17bf" },
-        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
-    },
+                {
+                    { "X-RapidAPI-Key", "dce4b6271amshaa9de90c4bf28fdp144949jsn5e10c62a17bf" },
+                    { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
+                },
             };
             using var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -111,12 +112,10 @@ namespace BucketListAdventures.Controllers
             double lat = (double)LatlongObject["features"][0]["geometry"]["coordinates"][1];
             Task<JArray> Activities = GetActivities(lon, lat);
             JArray activitiesObject = Activities.Result;
+            ViewBag.activitiesObject = activitiesObject.Where(activity => (activity["name"] != null));
 
             WeatherStation closest_station = _repo.GetNearestWeatherStation(lat, lon);
             IEnumerable<MonthlyData> climateData = ReadCsvData(closest_station.station_id);
-
-            ViewBag.activitiesObject = activitiesObject;
-
             ViewBag.climateData = climateData;
 
             return View();
@@ -165,14 +164,8 @@ namespace BucketListAdventures.Controllers
         [Route("/home/details")]
         public IActionResult Details(string activity)
         {
-            foreach (var activityDetail in data)
-            {
-                if (activity == (string)activityDetail["name"])
-                {
-                    ViewBag.activityDetails = activityDetail;
-                    return View();
-                }
-            }
+            JToken activityDetail = data.Where(x => x["name"] != null && x["name"].ToString() == activity).First();
+            ViewBag.activityDetail = activityDetail;
             return View();
         }
 
