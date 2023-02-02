@@ -19,10 +19,6 @@ namespace BucketListAdventures.Controllers
             context = dbContext;
         }
 
-
-        //static private List<Destination> Destinations = new List<Destination>();
-
-        //GET: /<controllers>
         [HttpGet]
         public IActionResult Index()
         {
@@ -104,5 +100,6 @@ namespace BucketListAdventures.Controllers
 
             return Redirect("/Destinations");
         }
+
     }
 }

@@ -4,18 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
 using System.Diagnostics;
+using static BucketListAdventures.Models.ClimateNormals;
 
 namespace BucketListAdventures.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserProfileRepository _repository;
+
+ 
         private readonly ILogger<HomeController> _logger;
         private readonly IUserProfileRepository _userProfileRepository;
         private static JArray data;
-        public HomeController(ILogger<HomeController> logger, IUserProfileRepository userProfileRepository)
+        ClimateNormals climateNormals = new ClimateNormals();
+        private ApplicationRepository _repo;
+        public HomeController(ILogger<HomeController> logger, ApplicationRepository repo, IUserProfileRepository repository)
         {
             _logger = logger;
-            _userProfileRepository = userProfileRepository; 
+            _repo = repo;
+            _repository = repository;
         }
 
         public IActionResult Index()
@@ -128,14 +135,21 @@ namespace BucketListAdventures.Controllers
             Task<JArray> Activities = GetActivities(lon, lat);
             JArray activitiesObject = Activities.Result;
 
+            WeatherStation closest_station = _repo.GetNearestWeatherStation(lat, lon);
+            IEnumerable<MonthlyData> climateData = ReadCsvData(closest_station.station_id);
+
             ViewBag.activitiesObject = activitiesObject;
+
+            ViewBag.climateData = climateData;
 
             return View();
         }
         [HttpPost]
         [Route("/home/navigate")]
+
         public IActionResult DisplayNavigate(SearchViewModel searchViewModel)
         {
+
             Task<JObject> LatLong = GetLatLong(searchViewModel.CityName);
             JObject LatlongObject = LatLong.Result;
             double lon = (double)LatlongObject["features"][0]["geometry"]["coordinates"][0];
@@ -145,8 +159,26 @@ namespace BucketListAdventures.Controllers
             ViewBag.lon = lon;
             ViewBag.lat = lat;
 
-
-
+           UserProfile userProfile = _repository.GetUserProfileByUserName(User.Identity.Name.ToString());
+            if (userProfile != null)
+            {
+                ViewBag.Address = userProfile.Address;
+                ViewBag.Name = userProfile.Name;
+            }
+            // Code for getting the address from the database goes here.
+            
+       
+            string homeAddress = ViewBag.Address;
+            
+            Task<JObject> homeAddressLatLong = GetLatLong(homeAddress);
+            JObject homeAddressLatlongObject = homeAddressLatLong.Result;
+            double homeAddresslon = (double)homeAddressLatlongObject["features"][0]["geometry"]["coordinates"][0];
+            double homeAddresslat = (double)homeAddressLatlongObject["features"][0]["geometry"]["coordinates"][1];
+            
+            
+           
+            ViewBag.homeAddresslon = homeAddresslon;
+            ViewBag.homeAddresslat = homeAddresslat;
             ViewBag.directionsObject = directionsObject;
 
 

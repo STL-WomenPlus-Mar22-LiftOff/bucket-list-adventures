@@ -1,4 +1,5 @@
 ﻿@using BucketListAdventures.Models
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @model List<Destination>
 
@@ -30,9 +31,6 @@
     <thead>
         <tr>
             <th scope="col">
-                Destination ID
-            </th>
-            <th scope="col">
                 Name of Destination
             </th>
             <th scope="col">
@@ -48,7 +46,6 @@
         @foreach (var dest in Model)
         {
             <tr>
-                <th scope="row">@dest.Id</th>
                 <th scope="row">@dest.Name</th>
                 <th scope="row">@dest.Location</th>
                 <th scope="row">@dest.Description</th> 
@@ -58,3 +55,4 @@
 
     </tbody>
 </table>
+

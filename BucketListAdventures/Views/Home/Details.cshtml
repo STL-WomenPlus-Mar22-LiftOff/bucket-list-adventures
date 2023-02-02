@@ -1,11 +1,29 @@
-﻿
-<img src="./images/Bucket compass.jpg" alt="Bucket compass" width="500" height="600">
+﻿@model BucketListAdventures.ViewModels.AddDestinationViewModel
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<form asp-controller="Destinations" asp-action="Add" method="post" class="form-control">
+    <div class="form-group row">
+        <input type="hidden" asp-for="Name" value="@ViewBag.activityDetails["name"]" />
+        <span asp-validation-for="Name"></span>
+        <input type="hidden" asp-for="Location" value="@ViewBag.activityDetails["location_string"]" />
+        <span asp-validation-for="Location"></span>
+        <input type="hidden" asp-for="Description" value="@ViewBag.activityDetails["description"]" />
+        <span asp-validation-for="Description"></span>
+        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Add This Activity To Your Bucket List" />
+    </div>
+</form>
+
+
+
+
+<img src="~/images/bucket_compass.jpg" alt="Bucket List Compass Image" height="250" width="280">
+
 
 @if (ViewBag.activityDetails != null)
 {
     <h1>@ViewBag.activityDetails["name"]</h1>
-    <p><b>Number Of Reviews:</b>@ViewBag.activityDetails["num_reviews"]</p>
-    <p><b>Location:</b>@ViewBag.activityDetails["location_string"]</p>
+    <p><b>Number Of Reviews:</b> @ViewBag.activityDetails["num_reviews"]</p>
+    <p><b>Location:</b> @ViewBag.activityDetails["location_string"]</p>
     <p><b>Description:</b> @ViewBag.activityDetails["description"] </p>
 
     <p><b>URL:</b> <a href=@ViewBag.activityDetails["web_url"]>@ViewBag.activityDetails["name"]</a> </p>
