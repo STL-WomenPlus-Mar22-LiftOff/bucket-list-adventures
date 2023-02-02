@@ -164,11 +164,16 @@ namespace BucketListAdventures.Controllers
         [Route("/home/details")]
         public IActionResult Details(string activity)
         {
-            JToken activityDetail = data.Where(x => x["name"] != null && x["name"].ToString() == activity).First();
-            ViewBag.activityDetail = activityDetail;
+            foreach (var activityDetail in data)
+            {
+                if (activity == (string)activityDetail["name"])
+                {
+                    ViewBag.activityDetails = activityDetail;
+                    return View();
+                }
+            }
             return View();
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
