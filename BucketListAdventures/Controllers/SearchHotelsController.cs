@@ -1,20 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BucketListAdventures.Data;
-using BucketListAdventures.Models;
 using BucketListAdventures.ViewModels;
-using amadeus;
-using SearchActivities.ViewModel;
 using Newtonsoft.Json.Linq;
-using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
-using amadeus.exceptions;
-using amadeus.resources;
-using Humanizer;
-using System.Reflection.PortableExecutable;
-using DotLiquid.Util;
 using System.Net.Http.Headers;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Net.Mime;
 
 namespace BucketListAdventures.Controllers
 {
