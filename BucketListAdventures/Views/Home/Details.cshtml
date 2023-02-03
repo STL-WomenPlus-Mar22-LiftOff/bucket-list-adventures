@@ -1,36 +1,41 @@
 ﻿@model BucketListAdventures.ViewModels.AddDestinationViewModel
 @addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<form asp-controller="Destinations" asp-action="Add" method="post" class="form-control">
-    <div class="form-group row">
-        <input type="hidden" asp-for="Name" value="@ViewBag.activityDetails["name"]" />
-        <span asp-validation-for="Name"></span>
-        <input type="hidden" asp-for="Location" value="@ViewBag.activityDetails["location_string"]" />
-        <span asp-validation-for="Location"></span>
-        <input type="hidden" asp-for="Description" value="@ViewBag.activityDetails["description"]" />
-        <span asp-validation-for="Description"></span>
-        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Add This Activity To Your Bucket List" />
-    </div>
-</form>
-
-<img src="~/images/bucket_compass.jpg" alt="Bucket List Compass Image" height="250" width="280">
-
 @if (ViewBag.activityDetails != null)
 {
-    Console.WriteLine(@ViewBag.activityDetails.GetValue("rating").GetType());
-    <h1>@ViewBag.activityDetails["name"]</h1>
-    <p><b>Location: </b>@ViewBag.activityDetails["location_string"]</p>
-    @if (!string.IsNullOrEmpty(ViewBag.activityDetails["description"].ToString())){
-        <p><b>Description: </b> @ViewBag.activityDetails["description"] </p>
-    }
-    <p><b>Rating: </b>@Math.Truncate(ViewBag.activityDetails.GetValue("rating").ToObject<double>())/5 stars</p>
-    <a href="@ViewBag.activityDetails["web_url"]#REVIEWS"><b>Reviews: </b>@ViewBag.activityDetails["num_reviews"]</a>
-    <p><b>URL:</b> <a href=@ViewBag.activityDetails["web_url"]>@ViewBag.activityDetails["name"]</a> </p>
-
-    if (ViewBag.activityDetails["photo"] != null)
-    {
-        <img src=@ViewBag.activityDetails["photo"]["images"]["large"]["url"] alt="picture of @ViewBag.activityDetails["name"]" />
-    }
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h1>@ViewBag.activityDetails["name"]</h1>
+                <h2 class="text-muted">@ViewBag.activityDetails["address"]</h2>
+                @if (!string.IsNullOrEmpty(ViewBag.activityDetails["description"].ToString()))
+                {
+                    <p><b>Description: </b> @ViewBag.activityDetails["description"] </p>
+                }
+                @if (ViewBag.activityDetails["photo"] != null)
+                {
+                    <img src="@ViewBag.activityDetails["photo"]["images"]["large"]["url"]" alt="@ViewBag.activityDetails["photo"]["caption"]" />
+                }
+                <p><b>Rating: </b>@Math.Truncate(ViewBag.activityDetails.GetValue("rating").ToObject<double>())/5 stars</p>
+                <a href="@ViewBag.activityDetails["web_url"]#REVIEWS"><b>Reviews: </b>@ViewBag.activityDetails["num_reviews"]</a>
+            </div>
+            <div class="col-6">
+                <img src="~/images/bucket_compass.jpg" alt="Bucket List Compass Image" height="250" width="280">
+                <form asp-controller="Destinations" asp-action="Add" method="post" class="form-control">
+                    <div class="form-group row">
+                        <input type="hidden" asp-for="Name" value="@ViewBag.activityDetails["name"]" />
+                        <span asp-validation-for="Name"></span>
+                        <input type="hidden" asp-for="Location" value="@ViewBag.activityDetails["location_string"]" />
+                        <span asp-validation-for="Location"></span>
+                        <input type="hidden" asp-for="Description" value="@ViewBag.activityDetails["description"]" />
+                        <span asp-validation-for="Description"></span>
+                        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Add This Activity To Your Bucket List" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 }
 else
 {
