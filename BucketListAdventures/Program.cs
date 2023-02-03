@@ -1,10 +1,6 @@
 using BucketListAdventures.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using BucketListAdventures.Areas.Identity.Data;
-using amadeus;
-using amadeus.resources;
-using BucketListAdventures;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,9 +1,43 @@
 ﻿@using BucketListAdventures.ViewModels;
 @model SearchHotelsViewModel;
 
-
-<form method="post">
-    <p>Please Enter The City You're Considering As A Destination:</p>
-    <input type="text" name="cityName" />
-    <input type="submit" />
-</form>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search" method="get">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CityName" class="control-label">Destination</label>
+                    <input asp-for="CityName" class="form-control"/>
+                    <span asp-validation-for="CityName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CheckIn" class="control-label">Check In</label>
+                    <input asp-for="CheckIn" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+                    <span asp-validation-for="CheckIn" class="text-danger"></span>
+                </div>
+                <div class="form-group">                   
+                    <label asp-for="CheckOut" class="control-label">Check Out</label>
+                    <input asp-for="CheckOut" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+                    <span asp-validation-for="CheckOut" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumOfRooms" class="control-label">Number of Rooms</label>
+                    <input asp-for="NumOfRooms" class="form-control" min="0" max="20"/>
+                    <span asp-validation-for="NumOfRooms" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumOfAdults" class="control-label">Number of Adults</label>
+                    <input asp-for="NumOfAdults" class="form-control" min="0" max="50" />
+                    <span asp-validation-for="NumOfAdults" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ChildAges" class="control-label">Ages of all children (separate with commas)</label>
+                    <input asp-for="ChildAges" class="form-control" />
+                    <span asp-validation-for="ChildAges" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Search" class="btn btn-primary"/>
+                </div>
+        </form>
+    </div>
+</div>

@@ -7,7 +7,7 @@
     @foreach (var hotel in ViewBag.body)
     {
         <li>
-            <a href="@Url.Action("DisplayHotelList","SearchHotels")?hotel=@hotel.name">  @hotel.name </a>
+            <a href="@Url.Action("DisplayHotelList","SearchHotels")?hotel=@hotel.body">  @hotel.body </a>
         </li>
     }
 </ul>

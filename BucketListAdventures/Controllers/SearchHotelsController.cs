@@ -14,6 +14,7 @@ using System.Reflection.PortableExecutable;
 using DotLiquid.Util;
 using System.Net.Http.Headers;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Net.Mime;
 
 namespace BucketListAdventures.Controllers
 {
@@ -28,7 +29,7 @@ namespace BucketListAdventures.Controllers
         private static object numOfNights;
         private static object amenitites;
         private static object numOfRooms;
-        private static object hotelClass;
+       
 
         public SearchHotelsController(ILogger<SearchHotelsController> logger)
         {
@@ -68,20 +69,30 @@ namespace BucketListAdventures.Controllers
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/hotels/list-by-latlng?latitude={lat}&longitude={lon}&lang=en_US&hotel_class={hotelClass}&limit=50&adults={numOfAdults}&amenities={amenitites}&rooms={numOfRooms}&child_rm_ages={childAges}&checkin={checkinDate}&nights={numOfNights}"),
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("https://travel-advisor.p.rapidapi.com/hotels/v2/list?"),
                 Headers =
-            {
-                { "X-RapidAPI-Key", "293fcdc097mshb921a2ca7278e53p12a2e5jsnc86a94d37c17" },
-                { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
-            },
-                };
-            using (var response = await client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-                return (JObject)body;
-            }
+    {
+        { "X-RapidAPI-Key", "293fcdc097mshb921a2ca7278e53p12a2e5jsnc86a94d37c17" },
+        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
+    },
+                Content = new StringContent("{\"geoId\":29392,\"checkIn\":\"2022-03-10\",\"checkOut\":\"2022-03-15\",\"sort\":\"PRICE_LOW_TO_HIGH\",\"sortOrder\":\"asc\",\"filters\":[{\"id\":\"deals\",\"value\":[\"1\",\"2\",\"3\"]},{\"id\":\"price\",\"value\":[\"31\",\"122\"]},{\"id\":\"type\",\"value\":[\"9189\",\"9201\"]},{\"id\":\"amenity\",\"value\":[\"9156\",\"9658\",\"21778\",\"9176\"]},{\"id\":\"distFrom\",\"value\":[\"2227712\",\"25.0\"]},{\"id\":\"rating\",\"value\":[\"40\"]},{\"id\":\"class\",\"value\":[\"9572\"]}],\"rooms\":[{\"adults\":2,\"childrenAges\":[2]},{\"adults\":2,\"childrenAges\":[3]}],\"boundingBox\":{\"northEastCorner\":{\"latitude\":12.248278039408776,\"longitude\":109.1981618106365},\"southWestCorner\":{\"latitude\":12.243407232845051,\"longitude\":109.1921640560031}},\"updateToken\":\"\"}")
+
+    {
+    Headers =
+
+        {
+        ContentType = new MediaTypeHeaderValue("application/json")
+
+        }
+}
+};
+using (var response = await client.SendAsync(request))
+{
+    response.EnsureSuccessStatusCode();
+    var body = await response.Content.ReadAsStringAsync();
+    return (JObject)body;
+}
         }
 
 
@@ -89,7 +100,10 @@ namespace BucketListAdventures.Controllers
         [Route("/home/hotel")]
         public async Task<IActionResult> DisplayHotelList(SearchHotelsViewModel searchHotelsViewModel)
         {
-
+            if (searchHotelsViewModel.CheckIn == null || searchHotelsViewModel.CheckOut == null)
+            {
+                return View();
+            }
 
             var client = new HttpClient();
             var request = new HttpRequestMessage
