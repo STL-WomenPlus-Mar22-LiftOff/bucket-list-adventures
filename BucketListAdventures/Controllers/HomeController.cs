@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
 using System.Diagnostics;
 using System.Linq;
+using System;
 using static BucketListAdventures.Models.ClimateNormals;
 
 namespace BucketListAdventures.Controllers
@@ -12,18 +13,19 @@ namespace BucketListAdventures.Controllers
     public class HomeController : Controller
     {
         private readonly IUserProfileRepository _repository;
-
- 
         private readonly ILogger<HomeController> _logger;
         private static JArray data;
-
-        ClimateNormals climateNormals = new ClimateNormals();
         private ApplicationRepository _repo;
-        public HomeController(ILogger<HomeController> logger, ApplicationRepository repo, IUserProfileRepository repository)
+        private readonly IConfiguration _config;
+        private ClimateNormals climateNormals = new ClimateNormals();
+        private static string tripAdvisorApiKey;
+        public HomeController(ILogger<HomeController> logger, ApplicationRepository repo, IUserProfileRepository repository, IConfiguration config)
         {
             _logger = logger;
             _repo = repo;
             _repository = repository;
+            _config = config;
+            tripAdvisorApiKey = _config["tripAdvisorApiKey"];
         }
 
         public IActionResult Index()
@@ -70,7 +72,7 @@ namespace BucketListAdventures.Controllers
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng?longitude={lon}&latitude={lat}&lunit=km&currency=USD&lang=en_US"),
                 Headers =
                 {
-                    { "X-RapidAPI-Key", "dce4b6271amshaa9de90c4bf28fdp144949jsn5e10c62a17bf" },
+                    { "X-RapidAPI-Key", tripAdvisorApiKey },
                     { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
                 },
             };
