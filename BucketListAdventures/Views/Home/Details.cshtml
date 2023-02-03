@@ -13,39 +13,26 @@
     </div>
 </form>
 
-
-
-
 <img src="~/images/bucket_compass.jpg" alt="Bucket List Compass Image" height="250" width="280">
-
 
 @if (ViewBag.activityDetails != null)
 {
+    Console.WriteLine(@ViewBag.activityDetails.GetValue("rating").GetType());
     <h1>@ViewBag.activityDetails["name"]</h1>
-    <p><b>Number Of Reviews: </b>@ViewBag.activityDetails["num_reviews"]</p>
     <p><b>Location: </b>@ViewBag.activityDetails["location_string"]</p>
-    <p><b>Description: </b> @ViewBag.activityDetails["description"] </p>
-
+    @if (!string.IsNullOrEmpty(ViewBag.activityDetails["description"].ToString())){
+        <p><b>Description: </b> @ViewBag.activityDetails["description"] </p>
+    }
+    <p><b>Rating: </b>@Math.Truncate(ViewBag.activityDetails.GetValue("rating").ToObject<double>())/5 stars</p>
+    <a href="@ViewBag.activityDetails["web_url"]#REVIEWS"><b>Reviews: </b>@ViewBag.activityDetails["num_reviews"]</a>
     <p><b>URL:</b> <a href=@ViewBag.activityDetails["web_url"]>@ViewBag.activityDetails["name"]</a> </p>
-    <b>Reviews</b>
-    if (ViewBag.activityDetails["reviews"] != null)
-    {
-        @foreach (var review in ViewBag.activityDetails["reviews"])
-        {
-            <p><a href=@review.url>@review.published_date</a></p>
-        }
-    }
-    else
-    {
-        <h4>Reviews are not available</h4>
-    }
+
     if (ViewBag.activityDetails["photo"] != null)
     {
-        <img src=@ViewBag.activityDetails["photo"]["images"]["medium"]["url"] alt="Img not available " />
-
+        <img src=@ViewBag.activityDetails["photo"]["images"]["large"]["url"] alt="picture of @ViewBag.activityDetails["name"]" />
     }
 }
 else
 {
-    <h4> Photo is not Available </h4>
+    <h4>No details available</h4>
 }
