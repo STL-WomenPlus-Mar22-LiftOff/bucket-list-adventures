@@ -18,14 +18,14 @@ namespace BucketListAdventures.Controllers
         private ApplicationRepository _repo;
         private readonly IConfiguration _config;
         private ClimateNormals climateNormals = new ClimateNormals();
-        private static string tripAdvisorApiKey;
+        private static string travelAdvisorApiKey;
         public HomeController(ILogger<HomeController> logger, ApplicationRepository repo, IUserProfileRepository repository, IConfiguration config)
         {
             _logger = logger;
             _repo = repo;
             _repository = repository;
             _config = config;
-            tripAdvisorApiKey = _config["tripAdvisorApiKey"];
+            travelAdvisorApiKey = _config["travelAdvisorApiKey"];
         }
 
         public IActionResult Index()
@@ -72,7 +72,7 @@ namespace BucketListAdventures.Controllers
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng?longitude={lon}&latitude={lat}&lunit=km&currency=USD&lang=en_US"),
                 Headers =
                 {
-                    { "X-RapidAPI-Key", tripAdvisorApiKey },
+                    { "X-RapidAPI-Key", travelAdvisorApiKey },
                     { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
                 },
             };
