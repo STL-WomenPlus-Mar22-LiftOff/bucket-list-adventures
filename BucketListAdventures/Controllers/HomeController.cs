@@ -62,7 +62,7 @@ namespace BucketListAdventures.Controllers
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng?longitude={lon}&latitude={lat}&lunit=km&currency=USD&lang=en_US"),
                 Headers =
     {
-        { "X-RapidAPI-Key", "dce4b6271amshaa9de90c4bf28fdp144949jsn5e10c62a17bf" },
+        { "X-RapidAPI-Key", "0d2cab3ae3mshb44fd77664469a0p1c8f19jsn43b9ff0d5a7f" },
         { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
     },
             };
