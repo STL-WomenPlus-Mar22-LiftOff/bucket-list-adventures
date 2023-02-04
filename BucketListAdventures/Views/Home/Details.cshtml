@@ -7,31 +7,42 @@
         <div class="row">
             <div class="col-6">
                 <h1>@ViewBag.activityDetails["name"]</h1>
-                <h2 class="text-muted">@ViewBag.activityDetails["address"]</h2>
-                @if (!string.IsNullOrEmpty(ViewBag.activityDetails["description"].ToString()))
-                {
-                    <p><b>Description: </b> @ViewBag.activityDetails["description"] </p>
-                }
+                <h2 class="text-muted">@ViewBag.activityDetails["address_obj"]["street1"],
+                    @ViewBag.activityDetails["address_obj"]["city"],
+                    @ViewBag.activityDetails["address_obj"]["state"]
+                </h2>
                 @if (ViewBag.activityDetails["photo"] != null)
                 {
-                    <img src="@ViewBag.activityDetails["photo"]["images"]["large"]["url"]" alt="@ViewBag.activityDetails["photo"]["caption"]" />
+                    <img class="img-fluid rounded" src="@ViewBag.activityDetails["photo"]["images"]["large"]["url"]" alt="@ViewBag.activityDetails["photo"]["caption"]"/>
                 }
-                <p><b>Rating: </b>@Math.Truncate(ViewBag.activityDetails.GetValue("rating").ToObject<double>())/5 stars</p>
-                <a href="@ViewBag.activityDetails["web_url"]#REVIEWS"><b>Reviews: </b>@ViewBag.activityDetails["num_reviews"]</a>
+                @if (!string.IsNullOrEmpty(ViewBag.activityDetails["description"].ToString()))
+                {
+                    <p>@ViewBag.activityDetails["description"]</p>
+                }
             </div>
-            <div class="col-6">
-                <img src="~/images/bucket_compass.jpg" alt="Bucket List Compass Image" height="250" width="280">
-                <form asp-controller="Destinations" asp-action="Add" method="post" class="form-control">
-                    <div class="form-group row">
-                        <input type="hidden" asp-for="Name" value="@ViewBag.activityDetails["name"]" />
-                        <span asp-validation-for="Name"></span>
-                        <input type="hidden" asp-for="Location" value="@ViewBag.activityDetails["location_string"]" />
-                        <span asp-validation-for="Location"></span>
-                        <input type="hidden" asp-for="Description" value="@ViewBag.activityDetails["description"]" />
-                        <span asp-validation-for="Description"></span>
-                        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Add This Activity To Your Bucket List" />
+            <div class="col-6" style="background-color:powderblue;">
+                <div class="row">
+                    <div class="col-6">
+                        <p>Rating: @(ViewBag.activityDetails.GetValue("rating").ToObject<double>().ToString("0.#")) stars</p>
+                        <a href="@ViewBag.activityDetails["web_url"]#REVIEWS"><b>Reviews: </b>@ViewBag.activityDetails["num_reviews"]</a>
                     </div>
-                </form>
+                    <div class="col-6">
+                        <img class="img-fluid" src="~/images/bucket_compass.jpg" alt="Bucket with hat holding a compass">
+                    </div>
+                </div>
+                <div>
+                    <form asp-controller="Destinations" asp-action="Add" method="post" class="form-control">
+                        <div class="form-group row">
+                            <input type="hidden" asp-for="Name" value="@ViewBag.activityDetails["name"]" />
+                            <span asp-validation-for="Name"></span>
+                            <input type="hidden" asp-for="Location" value="@ViewBag.activityDetails["location_string"]" />
+                            <span asp-validation-for="Location"></span>
+                            <input type="hidden" asp-for="Description" value="@ViewBag.activityDetails["description"]" />
+                            <span asp-validation-for="Description"></span>
+                            <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Add This Activity To Your Bucket List" />
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
