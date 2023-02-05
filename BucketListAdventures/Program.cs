@@ -5,7 +5,7 @@ using BucketListAdventures.Areas.Identity.Data;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-var tripAdvisorApiKey = builder.Configuration["travelAdvisorApiKey"];
+var travelAdvisorApiKey = builder.Configuration["travelAdvisorApiKey"];
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
