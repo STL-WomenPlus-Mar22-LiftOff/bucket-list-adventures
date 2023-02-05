@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BucketListAdventures.Models;
 using BucketListAdventures.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.Text;
-using BucketListAdventures.Models;
+using SearchHotels.ViewModel;
 using System.Diagnostics;
+
+
 
 namespace BucketListAdventures.Controllers
 {
@@ -14,29 +14,16 @@ namespace BucketListAdventures.Controllers
 
         private readonly ILogger<SearchHotelsController> _logger;
         private static JArray data;
-
-       
-
         public SearchHotelsController(ILogger<SearchHotelsController> logger)
         {
             _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [HttpGet]
         [Route("/home/hotel")]
         public IActionResult Search()
         {
-            SearchHotelsViewModel searchHotelsViewModel = new SearchHotelsViewModel();
+            SearchHotelsViewModel searchHotelsViewModel = new();
             return View(searchHotelsViewModel);
         }
         public static async Task<JObject> GetLatLong(string city)
@@ -50,42 +37,55 @@ namespace BucketListAdventures.Controllers
             return position;
         }
 
-        public static async Task<JObject> HotelList(double lon, double lat)
+        public static async Task<JArray> GetHotels(double lat, double lon)
         {
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri("https://travel-advisor.p.rapidapi.com/hotels/v2/list?"),
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/hotels/list-by-latlng?latitude={lat}&longitude={lon}&lang=en_US&currency=USD"),
                 Headers =
-    {
-        { "X-RapidAPI-Key", "0d2cab3ae3mshb44fd77664469a0p1c8f19jsn43b9ff0d5a7f" },
-        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
-    },
-                Content = new StringContent("{\"geoId\":29392,\"checkIn\":\"2022-03-10\",\"checkOut\":\"2022-03-15\",\"sort\":\"PRICE_LOW_TO_HIGH\",\"sortOrder\":\"asc\",\"filters\":[{\"id\":\"deals\",\"value\":[\"1\",\"2\",\"3\"]},{\"id\":\"price\",\"value\":[\"31\",\"122\"]},{\"id\":\"type\",\"value\":[\"9189\",\"9201\"]},{\"id\":\"amenity\",\"value\":[\"9156\",\"9658\",\"21778\",\"9176\"]},{\"id\":\"distFrom\",\"value\":[\"2227712\",\"25.0\"]},{\"id\":\"rating\",\"value\":[\"40\"]},{\"id\":\"class\",\"value\":[\"9572\"]}],\"rooms\":[{\"adults\":2,\"childrenAges\":[2]},{\"adults\":2,\"childrenAges\":[3]}],\"boundingBox\":{\"northEastCorner\":{\"latitude\":12.248278039408776,\"longitude\":109.1981618106365},\"southWestCorner\":{\"latitude\":12.243407232845051,\"longitude\":109.1921640560031}},\"updateToken\":\"\"}")
+                {
+                    { "X-RapidAPI-Key", "293fcdc097mshb921a2ca7278e53p12a2e5jsnc86a94d37c17" },
+                    { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
+                },
             };
+            using var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JObject value = JObject.Parse(body);
+            data = (JArray)value["data"];
+            return data;
         }
 
-        
-
-
-      
-
+        [HttpPost]
+        [Route("/home/hotel")]
+        public IActionResult DisplayHotelResults(SearchHotelsViewModel searchHotelsViewModel)
         {
-         Headers =
+            Task<JObject> LatLong = GetLatLong(searchHotelsViewModel.CityName);
+            JObject LatlongObject = LatLong.Result;
+            double lon = (double)LatlongObject["features"][0]["geometry"]["coordinates"][0];
+            double lat = (double)LatlongObject["features"][0]["geometry"]["coordinates"][1];
+            Task<JArray> Hotels = GetHotels(lon, lat);
+            JArray hotelsObject = Hotels.Result;
 
+            ViewBag.hotelsObject = hotelsObject;
+
+            return View();
+        }
+        [HttpGet]
+        [Route("/hotel/details")]
+        public IActionResult DisplayHotelDetails(string hotel)
         {
-            ContentType = new MediaTypeHeaderValue("application/json")
-
+            foreach (var hotelDetail in data)
+            {
+                if (hotel == (string)hotelDetail["name"])
+                {
+                    ViewBag.hotelDetails = hotelDetail;
+                    return View();
                 }
             }
-        };
-        using (var response = await client.SendAsync(request))
-             {
-             response.EnsureSuccessStatusCode();
-             var body = await response.Content.ReadAsStringAsync();
-             return (JObject)body;
-             }
+            return View();
         }
     }
 } 

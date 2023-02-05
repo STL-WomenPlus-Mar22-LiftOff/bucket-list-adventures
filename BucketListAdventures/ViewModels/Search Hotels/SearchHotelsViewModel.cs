@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace BucketListAdventures.ViewModels
+namespace SearchHotels.ViewModel
 {
     public class SearchHotelsViewModel
     {
-        public string? CityName { get; set; }
+        public string CityName { get; set; }
 
         [BindProperty, DataType(DataType.Date)]
         public DateTime? CheckIn { get; set; } = null;
@@ -14,7 +14,7 @@ namespace BucketListAdventures.ViewModels
         public DateTime? CheckOut { get; set; } = null;
         public int NumOfRooms { get; set; }
         public int NumOfAdults { get; set; }
-        public int[]? ChildAges { get; set; }
+        public int[] ChildAges { get; set; }
 
     }
 }

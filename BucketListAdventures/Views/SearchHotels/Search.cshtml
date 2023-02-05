@@ -1,9 +1,9 @@
-﻿@using BucketListAdventures.ViewModels;
+﻿@using SearchHotels.ViewModel;
 @model SearchHotelsViewModel;
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Search" method="get">
+        <form asp-action="Search" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="CityName" class="control-label">Destination</label>
@@ -36,7 +36,7 @@
                     <span asp-validation-for="ChildAges" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Search" class="btn btn-primary"/>
+                    <input type="submit"/>
                 </div>
         </form>
     </div>

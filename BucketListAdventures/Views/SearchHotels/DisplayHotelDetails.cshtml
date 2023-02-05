@@ -1,0 +1,31 @@
+﻿@if (ViewBag.hotelDetails != null)
+{
+    <h1>@ViewBag.hotelDetails["name"]</h1>
+    <p><b>Number Of Reviews:</b>@ViewBag.hotelDetails["num_reviews"]</p>
+    <p><b>Location:</b>@ViewBag.hotelDetails["location_string"]</p>
+    <p><b>Description:</b> @ViewBag.hotelDetails["description"] </p>
+
+    <p><b>URL:</b> <a href=@ViewBag.hotelDetails["web_url"]>@ViewBag.hotelDetails["name"]</a> </p>
+    <b>Reviews</b>
+    if (ViewBag.hotelDetails["reviews"] != null)
+    {
+        @foreach (var review in ViewBag.hotelDetails["reviews"])
+        {
+            <p><a href=@review.url>@review.published_date</a></p>
+        }
+    }
+    else
+    {
+        <h4>Reviews are not available</h4>
+    }
+    if (ViewBag.hotelDetails["photo"] != null)
+    {
+        <img src=@ViewBag.hotelDetails["photo"]["images"]["medium"]["url"] alt="Img not available " />
+
+    }
+}
+else
+{
+    <h4> Photo is not Available </h4>
+}
+
