@@ -9,6 +9,7 @@ using System.Linq;
 using System;
 using static BucketListAdventures.Models.ClimateNormals;
 
+
 namespace BucketListAdventures.Controllers
 {
     public class HomeController : Controller
@@ -143,7 +144,10 @@ namespace BucketListAdventures.Controllers
             ViewBag.lat = lat;
 
            UserProfile userProfile = _repository.GetUserProfileByUserName(User.Identity.Name.ToString());
-            if (userProfile != null)
+            if (userProfile == null || userProfile.Address == null)
+            {
+                //MessageBox.Show("You need a profile AND a valid home address to access navigation.");
+            } else
             {
                 ViewBag.Address = userProfile.Address;
                 ViewBag.Name = userProfile.Name;
