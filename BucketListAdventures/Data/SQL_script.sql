@@ -1,8 +1,10 @@
+--Please execute the below scripts as part of destinations and userprofiles table creation
+
 CREATE TABLE destinations (
 Id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR (80),
-location VARCHAR (80),
-description VARCHAR (255)
+name VARCHAR (300),
+location VARCHAR (300),
+description VARCHAR (3000)
 );
 
 CREATE TABLE userprofiles (

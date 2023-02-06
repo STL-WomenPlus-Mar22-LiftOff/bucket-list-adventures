@@ -2,31 +2,62 @@
 
 @if (ViewBag.activityDetails != null)
 {
-    <h1>@ViewBag.activityDetails["name"]</h1>
-    <p><b>Number Of Reviews:</b>@ViewBag.activityDetails["num_reviews"]</p>
-    <p><b>Location:</b>@ViewBag.activityDetails["location_string"]</p>
-    <p><b>Description:</b> @ViewBag.activityDetails["description"] </p>
-
-    <p><b>URL:</b> <a href=@ViewBag.activityDetails["web_url"]>@ViewBag.activityDetails["name"]</a> </p>
-    <b>Reviews</b>
-    if (ViewBag.activityDetails["reviews"] != null)
-    {
-        @foreach (var review in ViewBag.activityDetails["reviews"])
-        {
-            <p><a href=@review.url>@review.published_date</a></p>
-        }
-    }
-    else
-    {
-        <h4>Reviews are not available</h4>
-    }
-    if (ViewBag.activityDetails["photo"] != null)
-    {
-        <img src=@ViewBag.activityDetails["photo"]["images"]["medium"]["url"] alt="Img not available " />
-
-    }
+    <div class="container">
+        <div class="row display-flex">
+            <div class="col-12 col-md-6">
+                <h1>@ViewBag.activityDetails["name"]</h1>
+                <h2 class="text-muted">@ViewBag.activityDetails["address_obj"]["street1"],
+                    @ViewBag.activityDetails["address_obj"]["city"],
+                    @ViewBag.activityDetails["address_obj"]["state"]
+                </h2>
+                @if (ViewBag.activityDetails["photo"] != null)
+                {
+                    <img class="img-fluid rounded" src="@ViewBag.activityDetails["photo"]["images"]["large"]["url"]" alt="@ViewBag.activityDetails["photo"]["caption"]"/>
+                }
+            </div>
+            <div id="attraction-details" class="col-12 col-md-6">
+                <div class="row">
+                    <div id="rating-and-review" class="col-12 col-md-6 ps-md-4">
+                        @if (ViewBag.activityDetails["rating"] != null) {
+                            <p>Rating: @(ViewBag.activityDetails.GetValue("rating").ToObject<double>().ToString("0.#")) stars</p>
+                        }
+                        @if (ViewBag.activityDetails["web_url"] != null){
+                            <a href="@ViewBag.activityDetails["web_url"]#REVIEWS">Reviews: @ViewBag.activityDetails["num_reviews"]</a>
+                        }
+                    </div>
+                    <div class="col-6 p-3 d-none d-md-inline-block">
+                        <img class="img-fluid" src="~/images/bucket_compass_transparent.png" alt="Bucket wearing hat and holding a compass">
+                    </div>
+                </div>
+                <div class="row">
+                    <div id = "attraction-description" class="col-12">
+                        @if (!string.IsNullOrEmpty(ViewBag.activityDetails["description"].ToString()))
+                        {
+                            <p>"@ViewBag.activityDetails["description"]"</p>
+                        }
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <form asp-controller="Destinations" asp-action="Add" method="post">
+                            <div class="form-group row">
+                                <input type="hidden" asp-for="Name" value="@ViewBag.activityDetails["name"]" />
+                                <span asp-validation-for="Name"></span>
+                                <input type="hidden" asp-for="Location" value="@ViewBag.activityDetails["location_string"]" />
+                                <span asp-validation-for="Location"></span>
+                                <input type="hidden" asp-for="Description" value="@ViewBag.activityDetails["description"]" />
+                                <span asp-validation-for="Description"></span>
+                                <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Add This Activity To Your Bucket List" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 }
 else
 {
-    <h4> Photo is not Available </h4>
+    <h4>No details available</h4>
 }

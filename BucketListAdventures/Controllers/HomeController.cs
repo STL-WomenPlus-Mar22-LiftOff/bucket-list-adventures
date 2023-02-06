@@ -1,19 +1,32 @@
-﻿using BucketListAdventures.Models;
-using BucketListAdventures.ViewModels;
+
+﻿using BucketListAdventures.Data;
+using BucketListAdventures.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
 using System.Diagnostics;
+using System.Linq;
+using System;
+using static BucketListAdventures.Models.ClimateNormals;
 
 namespace BucketListAdventures.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserProfileRepository _repository;
         private readonly ILogger<HomeController> _logger;
         private static JArray data;
-        public HomeController(ILogger<HomeController> logger)
+        private ApplicationRepository _repo;
+        private readonly IConfiguration _config;
+        private ClimateNormals climateNormals = new ClimateNormals();
+        private static string travelAdvisorApiKey;
+        public HomeController(ILogger<HomeController> logger, ApplicationRepository repo, IUserProfileRepository repository, IConfiguration config)
         {
             _logger = logger;
+            _repo = repo;
+            _repository = repository;
+            _config = config;
+            travelAdvisorApiKey = _config["travelAdvisorApiKey"];
         }
 
         public IActionResult Index()
@@ -46,7 +59,7 @@ namespace BucketListAdventures.Controllers
         {
             string accessToken = "pk.eyJ1IjoiY2hhbWFuZWJhcmJhdHRpIiwiYSI6ImNsY3FqcW9rZTA2aW4zcXBoMGx2eTBwNm0ifQ.LFRkBS7N5yGXvCQ_F5cF9g";
             HttpClient clientName = new();
-            string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{city}.json?access_token={accessToken}";
+            string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{city}.json?types=place,locality&country=us&access_token={accessToken}";
             HttpResponseMessage responseName = await clientName.GetAsync(url);
             string responseString = await responseName.Content.ReadAsStringAsync();
             JObject position = JObject.Parse(responseString);
@@ -61,10 +74,12 @@ namespace BucketListAdventures.Controllers
                 Method = HttpMethod.Get,
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng?longitude={lon}&latitude={lat}&lunit=km&currency=USD&lang=en_US"),
                 Headers =
-    {
-        { "X-RapidAPI-Key", "0d2cab3ae3mshb44fd77664469a0p1c8f19jsn43b9ff0d5a7f" },
-        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
-    },
+
+                {
+                    { "X-RapidAPI-Key", travelAdvisorApiKey },
+                    { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
+                },
+
             };
             using var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -104,15 +119,20 @@ namespace BucketListAdventures.Controllers
             double lat = (double)LatlongObject["features"][0]["geometry"]["coordinates"][1];
             Task<JArray> Activities = GetActivities(lon, lat);
             JArray activitiesObject = Activities.Result;
+            ViewBag.activitiesObject = activitiesObject.Where(activity => (activity["name"] != null));
 
-            ViewBag.activitiesObject = activitiesObject;
+            WeatherStation closest_station = _repo.GetNearestWeatherStation(lat, lon);
+            IEnumerable<MonthlyData> climateData = ReadCsvData(closest_station.station_id);
+            ViewBag.climateData = climateData;
 
             return View();
         }
         [HttpPost]
         [Route("/home/navigate")]
+
         public IActionResult DisplayNavigate(SearchViewModel searchViewModel)
         {
+
             Task<JObject> LatLong = GetLatLong(searchViewModel.CityName);
             JObject LatlongObject = LatLong.Result;
             double lon = (double)LatlongObject["features"][0]["geometry"]["coordinates"][0];
@@ -122,8 +142,26 @@ namespace BucketListAdventures.Controllers
             ViewBag.lon = lon;
             ViewBag.lat = lat;
 
-
-
+           UserProfile userProfile = _repository.GetUserProfileByUserName(User.Identity.Name.ToString());
+            if (userProfile != null)
+            {
+                ViewBag.Address = userProfile.Address;
+                ViewBag.Name = userProfile.Name;
+            }
+            // Code for getting the address from the database goes here.
+            
+       
+            string homeAddress = ViewBag.Address;
+            
+            Task<JObject> homeAddressLatLong = GetLatLong(homeAddress);
+            JObject homeAddressLatlongObject = homeAddressLatLong.Result;
+            double homeAddresslon = (double)homeAddressLatlongObject["features"][0]["geometry"]["coordinates"][0];
+            double homeAddresslat = (double)homeAddressLatlongObject["features"][0]["geometry"]["coordinates"][1];
+            
+            
+           
+            ViewBag.homeAddresslon = homeAddresslon;
+            ViewBag.homeAddresslat = homeAddresslat;
             ViewBag.directionsObject = directionsObject;
 
 
@@ -143,7 +181,6 @@ namespace BucketListAdventures.Controllers
             }
             return View();
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -6,53 +6,25 @@
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        height:60%;
-        width: 60%;
-        display:block;
-        margin-top:5%;
-
-        
-        
-      }
-      #instructions {
-  position: absolute;
-  margin-left: 65%;
-  width: 25%;
-  top: 0;
-  bottom: 20%;
-  padding: 20px;
-  background-color: #fff;
-  overflow-y: scroll;
-  font-family: sans-serif;
-}
-    </style>
   </head>
   <body>
-<!--
-  <ul>
-  @foreach (var routes in ViewBag.directionsObject)
-    {
-            <li>
-                
-                @routes.geometry
-            </li>
-    }
-</ul> -->
-    <div id='map'></div>
-    <div id="instructions">
+      <div id="map-container">
 
+      @*<ul>
+        @foreach (var routes in ViewBag.directionsObject)
+          {
+                  <li>
+              
+                      @routes.geometry
+                  </li>
+          }
+      </ul>*@ 
+
+      <div id='map'></div>
+      <div id="instructions" class="overflow-auto">
+
+      </div>
     </div>
-
     <script>
     // add the JavaScript here
 
@@ -61,7 +33,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhbWFuZWJhcmJhdHRpIiwiYSI6ImNsY3FqcW9rZTA2a
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v12',
-  center: [-90.199585,38.626426], // starting position
+  center: [@ViewBag.homeAddresslon,@ViewBag.homeAddresslat], // starting position
   zoom: 12
 });
 // set the bounds of the map
@@ -73,7 +45,7 @@ const map = new mapboxgl.Map({
 
 // an arbitrary start will always be the same
 // only the end or destination will change
-const start = [-90.199585,38.626426];
+const start = [@ViewBag.homeAddresslon,@ViewBag.homeAddresslat];
 
 // this is where the code for the next step will go
 

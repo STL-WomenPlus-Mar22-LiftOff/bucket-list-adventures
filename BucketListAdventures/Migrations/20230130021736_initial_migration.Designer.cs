@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BucketListAdventures.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230123092832_UserInterestMigration")]
-    partial class UserInterestMigration
+    [Migration("20230130021736_initial_migration")]
+    partial class initial_migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,8 +47,9 @@ namespace BucketListAdventures.Migrations
 
             modelBuilder.Entity("BucketListAdventures.Models.UserInterest", b =>
                 {
-                    b.Property<string>("UserName")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("Interest")
                         .IsRequired()
@@ -58,7 +59,7 @@ namespace BucketListAdventures.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("UserName");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserProfileUserName");
 

@@ -83,8 +83,9 @@ namespace BucketListAdventures.Controllers
                 {
                     addUserInterestsViewModels.Add(new AddUserInterestsViewModel(item, userProfile.Interests.Any(x => x.Interest.Equals(item))));
                 }
+                return addUserInterestsViewModels;
             }
-            return addUserInterestsViewModels;
+            return (from userInterest in userInterestsList select new AddUserInterestsViewModel(userInterest)).ToList();
         }
     }
 }
