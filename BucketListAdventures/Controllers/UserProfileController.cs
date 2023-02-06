@@ -24,7 +24,7 @@ namespace BucketListAdventures.Controllers
         public IActionResult Index()
         {
             AddUserProfileViewModel viewModel = new AddUserProfileViewModel();
-            string[] userInterests = { "Beaches", "Mountains", "Concerts", "Hiking", "Skiing", "Snorkeling", "Scuba Diving", "Amusement Parks", "Museums", "Zoo's", "Water Sports", "Boat tours", "Historical Landmarks", "National Parks", "Nature Wildlife Areas", "Hidden Gems", "Adventurous", "Budget Friendly", "Good for Kids", "Body of Waters", "Water Parks", "Nightlife", "Events", "Shopping", "Winery's", "Golf", "Aquariums", "Botanical Gardens", "Gambling", "Haunted Tours" };
+            string[] userInterests = { "Beaches", "Mountains", "Concerts", "Hiking", "Skiing", "Snorkeling", "Scuba Diving", "Amusement Parks", "Museums", "Zoos", "Water Sports", "Boat tours", "Historical Landmarks", "National Parks", "Nature Wildlife Areas", "Hidden Gems", "Adventurous", "Budget Friendly", "Good for Kids", "Bodies of Waters", "Water Parks", "Nightlife", "Events", "Shopping", "Wineries", "Golf", "Aquariums", "Botanical Gardens", "Gambling", "Haunted Tours" };
             UserProfile userProfile = _repository.GetUserProfileByUserName(User.Identity.Name.ToString());
             if (userProfile != null)
             {

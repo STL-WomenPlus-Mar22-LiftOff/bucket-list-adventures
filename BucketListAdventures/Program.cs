@@ -1,7 +1,6 @@
 using BucketListAdventures.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using BucketListAdventures.Areas.Identity.Data;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +17,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
@@ -54,3 +56,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+

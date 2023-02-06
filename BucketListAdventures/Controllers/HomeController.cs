@@ -1,3 +1,4 @@
+
 ﻿using BucketListAdventures.Data;
 using BucketListAdventures.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System;
 using static BucketListAdventures.Models.ClimateNormals;
+
 
 namespace BucketListAdventures.Controllers
 {
@@ -52,6 +54,8 @@ namespace BucketListAdventures.Controllers
             SearchViewModel searchViewModel = new();
             return View(searchViewModel);
         }
+
+
         public static async Task<JObject> GetLatLong(string city)
         {
             string accessToken = "pk.eyJ1IjoiY2hhbWFuZWJhcmJhdHRpIiwiYSI6ImNsY3FqcW9rZTA2aW4zcXBoMGx2eTBwNm0ifQ.LFRkBS7N5yGXvCQ_F5cF9g";
@@ -71,10 +75,12 @@ namespace BucketListAdventures.Controllers
                 Method = HttpMethod.Get,
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng?longitude={lon}&latitude={lat}&lunit=km&currency=USD&lang=en_US"),
                 Headers =
+
                 {
                     { "X-RapidAPI-Key", travelAdvisorApiKey },
                     { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
                 },
+
             };
             using var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -138,7 +144,10 @@ namespace BucketListAdventures.Controllers
             ViewBag.lat = lat;
 
            UserProfile userProfile = _repository.GetUserProfileByUserName(User.Identity.Name.ToString());
-            if (userProfile != null)
+            if (userProfile == null || userProfile.Address == null)
+            {
+                //MessageBox.Show("You need a profile AND a valid home address to access navigation.");
+            } else
             {
                 ViewBag.Address = userProfile.Address;
                 ViewBag.Name = userProfile.Name;
