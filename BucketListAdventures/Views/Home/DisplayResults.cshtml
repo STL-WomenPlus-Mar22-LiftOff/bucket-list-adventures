@@ -1,14 +1,4 @@
-
-<ul>
-    @foreach (var activity in ViewBag.activitiesObject)
-    {
-            <li>
-                <a href="@Url.Action("Details","Home")?activity=@activity.name">  @activity.name </a>
-            </li>
-    }
-</ul>
-
-﻿<div class="container">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
             <div>
