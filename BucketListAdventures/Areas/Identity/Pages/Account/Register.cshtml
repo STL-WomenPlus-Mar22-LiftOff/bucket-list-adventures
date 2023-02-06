@@ -1,16 +1,12 @@
 ﻿@page
 @model RegisterModel
-@{
-    ViewData["Title"] = "Register";
-}
 
-
-
-<div class="row">
-    <div class="col-md-6 p-3">
+    <h1 class="col-md-10">@ViewData["Title"]</h1>
+        <div class="row">
+            <div class="col-md-5">
+                <section>
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h1>@ViewData["Title"]</h1>
-            <h2 class="text-muted">Create a new account.</h2>
+            <h2>Create a new account</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
@@ -28,17 +24,23 @@
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 p-3 d-flex">
-        <div class="row justify-content-evenly" id="signup-picture">
-            <img class="responsive_image" src="~/images/timetotravel.jpg" alt="Bucket List">
-            <p><i>"The journey of a thousand miles begins with a single step."</i></p>
+            <div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-success">Register</button>
+            <br />
+                </div>
+            </form>
+        </section>
+    </div>       
+        <div class="col-md-6 col-md-offset-2">
+        <section>
+            <br />
+            <img class="img-fluid" src="~/images/timetotravel.jpg" alt="Bucket List" class="col-md-6 float-md-end mb-3 ms-md-3">
+            <br />
+            <p align="center"><i>"The journey of a thousand miles begins with a single step."</i></p>
+            </section>
         </div>
-    </div>
 </div>
-            
+
 
 
 
