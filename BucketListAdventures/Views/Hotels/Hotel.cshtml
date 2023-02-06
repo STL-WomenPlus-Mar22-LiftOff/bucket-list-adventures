@@ -1,10 +1,9 @@
-﻿@using SearchHotels.ViewModel;
+﻿@using BucketListAdventures.ViewModels;
 @model SearchHotelsViewModel;
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Search" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post">
                 <div class="form-group">
                     <label asp-for="CityName" class="control-label">Destination</label>
                     <input asp-for="CityName" class="form-control"/>
@@ -16,9 +15,9 @@
                     <span asp-validation-for="CheckIn" class="text-danger"></span>
                 </div>
                 <div class="form-group">                   
-                    <label asp-for="CheckOut" class="control-label">Check Out</label>
-                    <input asp-for="CheckOut" asp-format="{0:yyyy-MM-dd}" class="form-control" />
-                    <span asp-validation-for="CheckOut" class="text-danger"></span>
+                    <label asp-for="NumOfNights" class="control-label">How many nights will you be staying?</label>
+                    <input asp-for="NumOfNights" class="form-control" />
+                    <span asp-validation-for="NumOfNights" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="NumOfRooms" class="control-label">Number of Rooms</label>

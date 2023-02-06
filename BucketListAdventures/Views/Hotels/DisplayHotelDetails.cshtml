@@ -3,10 +3,10 @@
     <h1>@ViewBag.hotelDetails["name"]</h1>
     <p><b>Number Of Reviews:</b>@ViewBag.hotelDetails["num_reviews"]</p>
     <p><b>Location:</b>@ViewBag.hotelDetails["location_string"]</p>
-    <p><b>Description:</b> @ViewBag.hotelDetails["description"] </p>
+    <p><b>Price Point:</b> @ViewBag.hotelDetails["price_level"] </p>
 
-    <p><b>URL:</b> <a href=@ViewBag.hotelDetails["web_url"]>@ViewBag.hotelDetails["name"]</a> </p>
-    <b>Reviews</b>
+    <p><b>Offers:</b> <a href=@ViewBag.hotelDetails["offers"]>@ViewBag.hotelDetails["name"]</a> </p>
+    <b>Reviews:</b>
     if (ViewBag.hotelDetails["reviews"] != null)
     {
         @foreach (var review in ViewBag.hotelDetails["reviews"])

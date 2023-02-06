@@ -2,9 +2,9 @@
 using BucketListAdventures.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using SearchHotels.ViewModel;
 using System.Diagnostics;
-
+using System.Net;
+using Newtonsoft.Json;
 
 
 namespace BucketListAdventures.Controllers
@@ -18,10 +18,14 @@ namespace BucketListAdventures.Controllers
         {
             _logger = logger;
         }
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         [HttpGet]
-        [Route("/home/hotel")]
-        public IActionResult Search()
+        [Route("home/hotel")]
+        public IActionResult Hotel()
         {
             SearchHotelsViewModel searchHotelsViewModel = new();
             return View(searchHotelsViewModel);
@@ -50,17 +54,19 @@ namespace BucketListAdventures.Controllers
                     { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
                 },
             };
-            using var response = await client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-            var body = await response.Content.ReadAsStringAsync();
-            JObject value = JObject.Parse(body);
-            data = (JArray)value["data"];
-            return data;
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                JObject value = JObject.Parse(body);
+                data = (JArray)value["data"];
+                return data;
+            }    
         }
 
         [HttpPost]
-        [Route("/home/hotel")]
-        public IActionResult DisplayHotelResults(SearchHotelsViewModel searchHotelsViewModel)
+        [Route("home/hotel")]
+        public IActionResult DisplayHotels(SearchHotelsViewModel searchHotelsViewModel)
         {
             Task<JObject> LatLong = GetLatLong(searchHotelsViewModel.CityName);
             JObject LatlongObject = LatLong.Result;
@@ -74,8 +80,8 @@ namespace BucketListAdventures.Controllers
             return View();
         }
         [HttpGet]
-        [Route("/hotel/details")]
-        public IActionResult DisplayHotelDetails(string hotel)
+        [Route("home/hotel/details")]
+        public IActionResult HotelDetails(string hotel)
         {
             foreach (var hotelDetail in data)
             {
@@ -87,6 +93,12 @@ namespace BucketListAdventures.Controllers
             }
             return View();
         }
+
+       /* [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }*/
     }
 } 
 
