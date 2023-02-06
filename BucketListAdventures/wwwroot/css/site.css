@@ -13,10 +13,9 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+footer {
+    background-color: white;
 }
-
 
 /*using this class for home page image*/
 .responsive_image {
@@ -89,6 +88,15 @@ body {
 #myChart {
     display: inline-block !important;
 }
+
+
+#signup-picture > * {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#registerForm > * {
+    margin: 1rem;
 
 .row.display-flex {
     display: flex;
