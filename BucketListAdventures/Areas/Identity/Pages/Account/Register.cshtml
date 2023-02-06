@@ -7,12 +7,10 @@
 
 
 <div class="row">
-    <div class="col-md-2"></div>
-    <h1 class="col-md-10">@ViewData["Title"]</h1>
-    <div class="col-md-2"></div>
-    <div class="col-md-6">
+    <div class="col-md-6 p-3">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+            <h1>@ViewData["Title"]</h1>
+            <h2 class="text-muted">Create a new account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
@@ -30,11 +28,14 @@
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-                        <center><img class="responsive_image" src="~/images/timetotravel.jpg" alt="Bucket List"></center>
-            <br />
-            <p align="left"><i>"The journey of a thousand miles begins with a single step."</i></p>
+            <button id="registerSubmit" type="submit" class="btn btn-lg btn-primary">Register</button>
         </form>
+    </div>
+    <div class="col-md-6 p-3 d-flex">
+        <div class="row justify-content-evenly" id="signup-picture">
+            <img class="responsive_image" src="~/images/timetotravel.jpg" alt="Bucket List">
+            <p><i>"The journey of a thousand miles begins with a single step."</i></p>
+        </div>
     </div>
 </div>
             
