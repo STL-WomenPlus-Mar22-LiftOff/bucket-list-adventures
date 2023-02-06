@@ -1,13 +1,16 @@
 ﻿
 <form method="post" action="/destinations/edit">
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input name="name" type="text" value="@ViewBag.destinationToEdit.Name" />
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input name="name" class="form-control" type="text" value="@ViewBag.destinationToEdit.Name" />
     </div>
-    <div class="form-group">
-        <label for="description">Description</label>
-        <input name="description" type="text" value="@ViewBag.destinationToEdit.Description" />
+    <br />
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input name="description" class="form-control" type="text" value="@ViewBag.destinationToEdit.Description" />
     </div>
+    <br />
     <input type="hidden" value="@ViewBag.destinationToEdit.Id" name="destinationId">
-    <input type="submit" value="Edit Destination" />
+    <input type="submit" class="btn btn-success" value="Submit Edit" />
 </form>
+
