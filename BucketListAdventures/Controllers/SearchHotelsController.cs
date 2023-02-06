@@ -24,7 +24,7 @@ namespace BucketListAdventures.Controllers
         }
 
         [HttpGet]
-        [Route("home/hotel")]
+        [Route("/hotel")]
         public IActionResult Hotel()
         {
             SearchHotelsViewModel searchHotelsViewModel = new();
@@ -65,7 +65,7 @@ namespace BucketListAdventures.Controllers
         }
 
         [HttpPost]
-        [Route("home/hotel")]
+        [Route("/hotel")]
         public IActionResult DisplayHotels(SearchHotelsViewModel searchHotelsViewModel)
         {
             Task<JObject> LatLong = GetLatLong(searchHotelsViewModel.CityName);
@@ -79,8 +79,9 @@ namespace BucketListAdventures.Controllers
 
             return View();
         }
+
         [HttpGet]
-        [Route("home/hotel/details")]
+        [Route("/hotel/details")]
         public IActionResult HotelDetails(string hotel)
         {
             foreach (var hotelDetail in data)
@@ -93,12 +94,6 @@ namespace BucketListAdventures.Controllers
             }
             return View();
         }
-
-       /* [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }*/
     }
 } 
 
