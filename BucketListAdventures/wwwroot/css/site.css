@@ -8,6 +8,10 @@ html {
   }
 }
 
+body {
+    padding-bottom: 60px;
+}
+
 html {
   position: relative;
   min-height: 100%;
