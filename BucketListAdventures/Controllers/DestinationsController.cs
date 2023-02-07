@@ -44,6 +44,7 @@ namespace BucketListAdventures.Controllers
                     Name = addDestinationViewModel.Name,
                     Location = addDestinationViewModel.Location,
                     Description = addDestinationViewModel.Description,
+                    LocationId = addDestinationViewModel.LocationId,
                 };
 
                 context.Destinations.Add(newDestination);

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System;
 using static BucketListAdventures.Models.ClimateNormals;
+using Humanizer;
 
 
 namespace BucketListAdventures.Controllers
@@ -184,6 +185,37 @@ namespace BucketListAdventures.Controllers
                 }
             }
             return View();
+        }
+
+        [HttpGet]
+        [Route("/home/details/{locationId}")]
+        public IActionResult DetailsById(string locationId)
+        {
+            JArray details = GetActivityById(locationId).Result;
+            ViewBag.activityDetails = details;
+            return View();
+        }
+
+        public static async Task<JArray> GetActivityById(string id)
+        {
+            var client = new HttpClient();
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/get-details;{id}&access_token=pk.eyJ1IjoiY2hhbWFuZWJhcmJhdHRpIiwiYSI6ImNsY3FqcW9rZTA2aW4zcXBoMGx2eTBwNm0ifQ.LFRkBS7N5yGXvCQ_F5cF9g"),
+                Headers =
+                {
+                    { "X-RapidAPI-Key", travelAdvisorApiKey },
+                    { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
+                },
+            };
+            using var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JObject value = JObject.Parse(body);
+            data = (JArray)value["data"];
+            return data;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

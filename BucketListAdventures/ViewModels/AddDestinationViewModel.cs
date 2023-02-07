@@ -20,6 +20,7 @@ namespace BucketListAdventures.ViewModels
         [StringLength(3000, ErrorMessage = "Description is too long!")]
         public string Description { get; set; }
 
+        public string? LocationId { get; set; }
 
         public AddDestinationViewModel() { }
     }

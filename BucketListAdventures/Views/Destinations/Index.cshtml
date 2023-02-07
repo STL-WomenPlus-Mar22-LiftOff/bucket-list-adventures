@@ -40,7 +40,12 @@
         @foreach (var dest in Model)
         {
             <tr>
-                <th scope="row">@dest.Name</th>
+                @if (dest.LocationId != null & dest.LocationId != "0"){
+                    <th scope="row"><a href="home/details/@dest.LocationId">@dest.Name</a></th>
+                }
+                else{
+                    <th scope="row">@dest.Name</th>
+                }
                 <th scope="row">@dest.Location</th>
                 <th scope="row">@dest.Description</th>
                 <th scope="row"><a asp-controller="Destinations" asp-action="Edit" asp-route-id="@dest.Id" class="btn btn-warning">Edit</a></th>
