@@ -2,24 +2,24 @@
 
 <h1>Add A Destination</h1>
 
-<form method="post" class="form-control">
-    <div asp-controller="Destinations" asp-action="Add" class="form-group">
+<form method="post" asp-controller="Destinations" asp-action="Add">
+    <div class="mb-3 row">
         <label asp-for="Name"></label>
-        <input asp-for="Name" type="text" />
+        <input asp-for="Name" type="text" placeholder="example: Riverwalk" />
         <span asp-validation-for="Name"></span>
     </div>
     <br />
-    <div class="form-group">
+    <div class="mb-3 row">
         <label asp-for="Location"></label>
-        <input asp-for="Location" type="text" />
+        <input asp-for="Location" type="text" placeholder="example: Chicago, Illinois" />
         <span asp-validation-for="Location"></span>
     </div>
     <br />
-    <div class="form-group">
+    <div class="mb-3 row">
         <label asp-for="Description"></label>
-        <input asp-for="Description" type="text" />
+        <input asp-for="Description" type="text" placeholder="example: Riverside pedestrian path" />
         <span asp-validation-for="Description"></span>
     </div>
     <br />
-    <input type="submit" value="Add Destination" />
+    <input type="submit" class="btn btn-primary" value="Add Destination" />
 </form>

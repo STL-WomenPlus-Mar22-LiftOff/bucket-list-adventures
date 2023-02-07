@@ -8,15 +8,18 @@ html {
   }
 }
 
+body {
+    padding-bottom: 60px;
+}
+
 html {
   position: relative;
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+footer {
+    background-color: white;
 }
-
 
 /*using this class for home page image*/
 .responsive_image {
@@ -64,6 +67,7 @@ body {
     }
 }
 
+/*for search results page*/
 .search-result-container {
     padding: 0.3em;
 }
@@ -84,6 +88,49 @@ body {
     text-decoration: none;
 }
 
+/*avg temp by month chart*/
 #myChart {
     display: inline-block !important;
+}
+
+/*a div on details.cshtml*/
+#attraction-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 0.5em;
+    padding: 0em 2em;
+}
+
+#attraction-description {
+    font-size: 1.2em;
+}
+
+#rating-and-review {
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#rating-and-review a {
+    color: #6a8fc6;
+}
+
+#rating-and-review a:hover {
+    color: #3c66a3;
+}
+
+@media (max-width: 820px) {
+
+    #attraction-description {
+        font-size: 0.9em;
+        padding: 0 0 1em 0;
+    }
+
+    #rating-and-review {
+        font-size: 1em;
+        line-height: 1em;
+        padding: 1.5em 0em;
+    }
 }

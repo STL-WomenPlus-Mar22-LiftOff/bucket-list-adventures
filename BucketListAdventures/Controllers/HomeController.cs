@@ -1,3 +1,4 @@
+
 ﻿using BucketListAdventures.Data;
 using BucketListAdventures.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -5,7 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
 using System.Diagnostics;
+using System.Linq;
+using System;
 using static BucketListAdventures.Models.ClimateNormals;
+
 
 namespace BucketListAdventures.Controllers
 {
@@ -19,12 +23,18 @@ namespace BucketListAdventures.Controllers
         private readonly ILogger<HomeController> _logger;
         private static JArray data;
         ClimateNormals climateNormals = new ClimateNormals();
+
         private ApplicationRepository _repo;
-        public HomeController(ILogger<HomeController> logger, ApplicationRepository repo, IUserProfileRepository repository)
+        private readonly IConfiguration _config;
+        private ClimateNormals climateNormals = new ClimateNormals();
+        private static string travelAdvisorApiKey;
+        public HomeController(ILogger<HomeController> logger, ApplicationRepository repo, IUserProfileRepository repository, IConfiguration config)
         {
             _logger = logger;
             _repo = repo;
             _repository = repository;
+            _config = config;
+            travelAdvisorApiKey = _config["travelAdvisorApiKey"];
         }
 
         public IActionResult Index()
@@ -51,11 +61,13 @@ namespace BucketListAdventures.Controllers
             SearchViewModel searchViewModel = new();
             return View(searchViewModel);
         }
+
+
         public static async Task<JObject> GetLatLong(string city)
         {
             string accessToken = "pk.eyJ1IjoiY2hhbWFuZWJhcmJhdHRpIiwiYSI6ImNsY3FqcW9rZTA2aW4zcXBoMGx2eTBwNm0ifQ.LFRkBS7N5yGXvCQ_F5cF9g";
             HttpClient clientName = new();
-            string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{city}.json?access_token={accessToken}";
+            string url = $"https://api.mapbox.com/geocoding/v5/mapbox.places/{city}.json?types=place,locality&country=us&access_token={accessToken}";
             HttpResponseMessage responseName = await clientName.GetAsync(url);
             string responseString = await responseName.Content.ReadAsStringAsync();
             JObject position = JObject.Parse(responseString);
@@ -127,10 +139,12 @@ namespace BucketListAdventures.Controllers
                 Method = HttpMethod.Get,
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng?longitude={lon}&latitude={lat}&lunit=km&currency=USD&lang=en_US"),
                 Headers =
-    {
-        { "X-RapidAPI-Key", "fd5ad45d74mshf90136827d0b18dp10e651jsn36f71b6ee8da" },
-        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
-    },
+
+                {
+                    { "X-RapidAPI-Key", travelAdvisorApiKey },
+                    { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
+                },
+
             };
             using var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -170,12 +184,10 @@ namespace BucketListAdventures.Controllers
             double lat = (double)LatlongObject["features"][0]["geometry"]["coordinates"][1];
             Task<JArray> Activities = GetActivities(lon, lat);
             JArray activitiesObject = Activities.Result;
+            ViewBag.activitiesObject = activitiesObject.Where(activity => (activity["name"] != null));
 
             WeatherStation closest_station = _repo.GetNearestWeatherStation(lat, lon);
             IEnumerable<MonthlyData> climateData = ReadCsvData(closest_station.station_id);
-
-            ViewBag.activitiesObject = activitiesObject;
-
             ViewBag.climateData = climateData;
 
             return View();
@@ -196,7 +208,10 @@ namespace BucketListAdventures.Controllers
             ViewBag.lat = lat;
 
            UserProfile userProfile = _repository.GetUserProfileByUserName(User.Identity.Name.ToString());
-            if (userProfile != null)
+            if (userProfile == null || userProfile.Address == null)
+            {
+                //MessageBox.Show("You need a profile AND a valid home address to access navigation.");
+            } else
             {
                 ViewBag.Address = userProfile.Address;
                 ViewBag.Name = userProfile.Name;

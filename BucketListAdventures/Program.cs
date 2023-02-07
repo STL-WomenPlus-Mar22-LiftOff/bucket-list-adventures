@@ -1,10 +1,10 @@
 using BucketListAdventures.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using BucketListAdventures.Areas.Identity.Data;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var travelAdvisorApiKey = builder.Configuration["travelAdvisorApiKey"];
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -18,11 +18,15 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+
+
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 
-
+builder.Configuration.AddEnvironmentVariables()
+    .AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
 var app = builder.Build();
 
@@ -52,3 +56,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+

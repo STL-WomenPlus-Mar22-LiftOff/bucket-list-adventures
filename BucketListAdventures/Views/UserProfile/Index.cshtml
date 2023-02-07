@@ -25,14 +25,14 @@
         <div class="row">
             @for (int i = 0; i < @Model.UserInterests.Count; i++)
             {
-                <div class="col-2">
+                <div class="col-6 col-md-4 col-lg-2">
                     <input type="checkbox" name="Interests" value="@Model.UserInterests[i].UserInterest" asp-for="@Model.UserInterests[i].IsSelected" />
                     <label asp-for="@Model.UserInterests[i].IsSelected" class="form-label">@Model.UserInterests[i].UserInterest</label>
                     <input type="hidden" asp-for="@Model.UserInterests[i].UserInterest" />
                 </div>
             }
         </div>
-        <span asp-validation-for="UserInterests" class="alert-danger"></span>
+        <span asp-validation-for="Interests" class="alert-danger"></span>
     </div>
     <div class="col-12">
         <label class="form-label">Air Line Code :</label>
