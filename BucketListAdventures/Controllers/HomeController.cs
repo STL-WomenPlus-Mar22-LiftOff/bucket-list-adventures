@@ -1,5 +1,6 @@
 ﻿using BucketListAdventures.Data;
 using BucketListAdventures.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using SearchActivities.ViewModel;
@@ -11,10 +12,11 @@ namespace BucketListAdventures.Controllers
     public class HomeController : Controller
     {
         private readonly IUserProfileRepository _repository;
+        private readonly string _rapidApiKey = Environment.GetEnvironmentVariable("X-RapidAPI-Key", EnvironmentVariableTarget.User);
+        private readonly string _rapidApiHost = Environment.GetEnvironmentVariable("X-RapidAPI-Host", EnvironmentVariableTarget.User);
 
- 
+
         private readonly ILogger<HomeController> _logger;
-        private readonly IUserProfileRepository _userProfileRepository;
         private static JArray data;
         ClimateNormals climateNormals = new ClimateNormals();
         private ApplicationRepository _repo;
@@ -60,26 +62,60 @@ namespace BucketListAdventures.Controllers
             return position;
         }
 
-        public static async Task<JToken> GetFlightDetails(string destination)
+        public async Task<string> GetAirPortDetails(string destination)
         {
             var client = new HttpClient();
 
-            var request = new HttpRequestMessage
+            HttpRequestMessage request = GetHeaderRequest(destination);
+            using var response = await client.SendAsync(request);
+            Environment.GetCommandLineArgs();
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JArray value = JArray.Parse(body);
+            //data = value[0];
+            return value[0]["code"].ToString();
+        }
+
+        public async Task<JToken> GetFlightDetails(string origin, string destination, DateTime startDate, int totalTravellers)
+        {
+            var client = new HttpClient();
+
+            HttpRequestMessage request = GetFlightHeaderRequest(origin, destination, startDate, totalTravellers);
+            using var response = await client.SendAsync(request);
+            Environment.GetCommandLineArgs();
+            response.EnsureSuccessStatusCode();
+            var body = await response.Content.ReadAsStringAsync();
+            JToken value = JToken.Parse(body);
+            //data = value[0];
+            return value["airports"];
+        }
+
+        private HttpRequestMessage GetFlightHeaderRequest(string origin, string destination, DateTime startDate, int totalTravellers)
+        {
+            return new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/flights/create-session?o1={origin}&d1={destination}&dd1={startDate.ToString("yyyy-MM-dd")}&ta={totalTravellers}&c=0"),
+                Headers =
+                    {
+                        { "X-RapidAPI-Key", _rapidApiKey },
+                        { "X-RapidAPI-Host", _rapidApiHost },
+                    },
+            };
+        }
+
+        private HttpRequestMessage GetHeaderRequest(string destination)
+        {
+            return new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/airports/search?query={destination}&locale=en_US"),
                 Headers =
                     {
-                        { "X-RapidAPI-Key", "dce4b6271amshaa9de90c4bf28fdp144949jsn5e10c62a17bf" },
-                        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
+                        { "X-RapidAPI-Key", _rapidApiKey },
+                        { "X-RapidAPI-Host", _rapidApiHost },
                     },
             };
-            using var response = await client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-            var body = await response.Content.ReadAsStringAsync();
-            JArray value = JArray.Parse(body);
-            //data = value[0];
-            return value[0];
         }
 
         public static async Task<JArray> GetActivities(double lon, double lat)
@@ -92,7 +128,7 @@ namespace BucketListAdventures.Controllers
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/attractions/list-by-latlng?longitude={lon}&latitude={lat}&lunit=km&currency=USD&lang=en_US"),
                 Headers =
     {
-        { "X-RapidAPI-Key", "dce4b6271amshaa9de90c4bf28fdp144949jsn5e10c62a17bf" },
+        { "X-RapidAPI-Key", "fd5ad45d74mshf90136827d0b18dp10e651jsn36f71b6ee8da" },
         { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
     },
             };
@@ -199,12 +235,14 @@ namespace BucketListAdventures.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         [Route("/home/searchtravellers")]
         public IActionResult SearchTravellers()
         {
             SearchTravellerViewModel SearchTravellerViewModel = new();
-            SearchTravellerViewModel.CurrentLocation = _userProfileRepository.GetUserProfileByUserName(User.Identity.Name.ToString()).AirLineCode;
+            SearchTravellerViewModel.StartDate = DateTime.Now;
+            SearchTravellerViewModel.CurrentLocation = _repository.GetUserProfileByUserName(User.Identity.Name.ToString()).AirLineCode;
             return View(SearchTravellerViewModel);
         }
 
@@ -212,13 +250,21 @@ namespace BucketListAdventures.Controllers
         [Route("/home/searchtravellers")]
         public IActionResult DisplayResultsForTraveller(SearchTravellerViewModel searchTravellerViewModel)
         {
-            Task<JToken> Activities = GetFlightDetails(searchTravellerViewModel.DesiredDestination);
-            JToken activitiesObject = Activities.Result;
+            ViewBag.flightResults = GetFlightDetails(searchTravellerViewModel);
 
-            ViewBag.activitiesObject = activitiesObject;
             return View();
         }
 
+        private JArray GetFlightDetails(SearchTravellerViewModel searchTravellerViewModel)
+        {
+            string destinationAirLineCode = GetAirPortDetails(searchTravellerViewModel.DesiredDestination).Result;
+            Task<JToken> flightResults = GetFlightDetails(searchTravellerViewModel.CurrentLocation,
+                                        destinationAirLineCode,
+                                        new DateTime(searchTravellerViewModel.StartDate.Year, searchTravellerViewModel.StartDate.Month, searchTravellerViewModel.StartDate.Day),
+                                        searchTravellerViewModel.NoOfTravellers);
+            JArray result = JArray.Parse(flightResults.Result.ToString());
+            return result;
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

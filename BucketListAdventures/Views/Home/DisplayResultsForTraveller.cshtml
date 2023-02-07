@@ -1,8 +1,8 @@
 ﻿<ul>
-    @foreach (var activity in ViewBag.activitiesObject)
+    @foreach (var flightResult in ViewBag.flightResults)
     {
             <li>
-                <a href="@Url.Action("Details","Home")?activity=@activity.name">  @activity.name </a>
+                <a href="@Url.Action("Details","Home")?activity=@flightResult.c">  @flightResult.cn </a>
             </li>
     }
 </ul>

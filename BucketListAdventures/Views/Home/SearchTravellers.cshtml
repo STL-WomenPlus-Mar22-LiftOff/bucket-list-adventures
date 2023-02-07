@@ -1,38 +1,58 @@
 ﻿
 @using SearchActivities.ViewModel;
 @model SearchTravellerViewModel
-
 <form method="post" class="row g-3" >
-    <p>Please Enter The City You're Considering Traveling To:</p>
-    <div class="col-12">
-        <label class="form-label">Current Location :</label>
-        <label>@Model.CurrentLocation</label>
-    </div>
-    <div class="col-12">
-        <label class="form-label">Desired Destination :</label>
-        <input asp-for="DesiredDestination" class="form-control" />
-    </div>
-    <div class="col-12">
-        <label class="form-label">Start Date :</label>
-        <input asp-for="StartDate" type="date" class="form-control" />
-    </div>
-@*    <div class="col-12">
-        <label class="form-label">End Date :</label>
-        <input asp-for="EndDate" type="date" class="form-control" />
-    </div>*@
-    <div class="col-12">
-        <label class="form-label">Number of Travellers (Adults) :</label>
-        <input asp-for="NoOfTravellers" class="form-control" />
-    </div>
-@*    <div class="col-12">
-        <label class="form-label">Method of Travel :</label>
-        <input asp-for="MethodOfTravel" class="form-control" />
-    </div>
-     <div class="col-12">
-        <label class="form-label">Type of Traveler:</label>
-        <input asp-for="TypeOfTraveler" class="form-control" />
-    </div>*@
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="flight-tab" data-bs-toggle="tab" data-bs-target="#flight" type="button" role="tab" aria-controls="Flight" aria-selected="true">Flight</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="hotel-tab" data-bs-toggle="tab" data-bs-target="#hotel" type="button" role="tab" aria-controls="Hotel" aria-selected="false">Hotel</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="attraction-tab" data-bs-toggle="tab" data-bs-target="#attraction" type="button" role="tab" aria-controls="Attraction" aria-selected="false">Attraction</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active g3" id="flight" role="tabpanel" aria-labelledby="home-tab">
+          <div class="row">
+            <div class="col-6">
+                <label class="form-label">Current Location :</label>
+                <label>@Model.CurrentLocation</label>
+                <input asp-for="@Model.CurrentLocation" type="hidden" />
+            </div>
+            <div class="col-6">
+                <span class="border rounded-pill"></span>
+                <label class="form-label">Desired Destination :</label>
+                <input asp-for="DesiredDestination" class="form-control border rounded-pill" />
+                <input type="hidden" id="hfCustomer" name="Id" />
+            </div>
+            <div class="col-6">
+                <label class="form-label">Start Date :</label>
+                <input asp-for="StartDate" type="date" class="form-control border rounded-pill" />
+            </div>
+            @*    <div class="col-12">
+                <label class="form-label">End Date :</label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+            </div>*@
+            <div class="col-6">
+                <label class="form-label">Number of Travellers (Adults) :</label>
+                <input asp-for="NoOfTravellers" min="1" max="10" value="1" class="form-control border rounded-pill" />
+            </div>
+            @*    <div class="col-12">
+                <label class="form-label">Method of Travel :</label>
+                <input asp-for="MethodOfTravel" class="form-control" />
+            </div>
+                <div class="col-12">
+                <label class="form-label">Type of Traveler:</label>
+                <input asp-for="TypeOfTraveler" class="form-control" />
+            </div>*@
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="profile-tab">...</div>
+      <div class="tab-pane fade" id="attraction" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
 </form>

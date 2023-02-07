@@ -12,7 +12,7 @@
 
         //public string TypeOfTraveler { get; set; }
 
-        public DateOnly StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         //implementing only one way
         //public DateOnly EndDate { get; set; }
