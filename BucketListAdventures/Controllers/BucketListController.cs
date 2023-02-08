@@ -1,4 +1,15 @@
-﻿/*
+﻿/* FEEL FREE TO DELETE THIS FILE IN YOUR PERSONAL FORKS: 
+ * BucketListController.cs, BucketList.cs, AddBucketListViewModel.cs
+ * and the BucketList folder in Views
+ * These files were created but never worked on or finished before 
+ * the end of the team capstone project for LiftOff. 
+ * I plan to work with these files in my own personal fork & I
+ * can add them to the team project once completed
+ * (The files will in the future be used to create multiple Bucket Lists
+ * that are categorized by a location and possibly categorize lists)
+ * DELETING THE FILES MENTIONED ABOVE WILL NOT EFFECT THE APPLICATION AS THE FEATURE IS YET TO BE INTEGRATED.
+ * -Natasha-
+ * --------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
