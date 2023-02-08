@@ -3,16 +3,54 @@
 
 @model List<Destination>
 
-<div class="container">
+
+<div class="container-fluid">
     <div class="row">
-        <div class="col-4">
-           <img src="~/images/transparent_my_bucketlist.jpg" alt="My Bucket List" class="img-fluid"></div>
-        <div class="col-6">
-            <p class="btn-group">
-                <a asp-controller="Destinations" asp-action="Add" class="btn btn-primary">Add Destination</a>
-                <a asp-controller="Destinations" asp-action="Delete" class="btn btn-danger">Delete Destination</a>
-            </p>
-        </div>
+        <div class="col-6 col-md-4">
+            <img src="~/images/transparent_my_bucketlist.jpg" alt="My Bucket List" style="height:auto width:100%;" class="img-fluid">
+                <br /><br />
+                <p class="btn-group">
+                        <a asp-controller="Destinations" asp-action="Add" class="btn btn-outline-dark">Add Destination</a>
+                        <a asp-controller="Destinations" asp-action="Delete" class="btn btn-outline-dark">Delete Destination</a>
+                </p>
+         </div>
+        <div class="col-md-8">
+            <center><h3><bold><img src="~/images/bucket_snorkle.jpg" alt="Logo" height="40" width="40" />My Bucket List</bold></h3></center>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">
+                            Name of Destination
+                        </th>
+                        <th scope="col">
+                            Location
+                        </th>
+                        <th scope="col">
+                            Description
+                        </th>
+                        <th scope="col">
+                             Edit
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach (var dest in Model)
+                    {
+                        <tr class="table-danger">
+                            <th scope="row">@dest.Name</th>
+                            <th scope="row">@dest.Location</th>
+                            <th scope="row">@dest.Description</th>
+                            <th scope="row"><a asp-controller="Destinations" asp-action="Edit" asp-route-id="@dest.Id" class="btn btn-outline-dark btn-sm">Edit</a></th>
+                        </tr>
+                    }
+
+                    </tbody>
+                </table>
+                <br />
+            </div>
+       </div>
     </div>
 </div>
 
@@ -21,32 +59,5 @@
     <p>No destinations yet!</p>
 }
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">
-                Name of Destination
-            </th>
-            <th scope="col">
-                Location
-            </th>
-            <th scope="col">
-                Description
-            </th>
-        </tr>
-    </thead>
-    <tbody>
 
-        @foreach (var dest in Model)
-        {
-            <tr>
-                <th scope="row">@dest.Name</th>
-                <th scope="row">@dest.Location</th>
-                <th scope="row">@dest.Description</th>
-                <th scope="row"><a asp-controller="Destinations" asp-action="Edit" asp-route-id="@dest.Id" class="btn btn-warning">Edit</a></th>
-            </tr>
-        }
-
-    </tbody>
-</table>
 

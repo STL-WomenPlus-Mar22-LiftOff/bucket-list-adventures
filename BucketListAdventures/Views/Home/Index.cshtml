@@ -1,9 +1,60 @@
-﻿@{
+﻿@using SearchActivities.ViewModel
+@model SearchViewModel
+
+@{
     ViewData["Title"] = "Bucket List Adventures";
 }
 
-<div class="clearfix">
-
-<img src="~/images/home_page_image.jpg" alt="Home" class="img-fluid">
-
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <p><img src="~/images/home_page_image.jpg" alt="Home" class="img-fluid"></p>
+        </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <h3><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">🔍︎ Search For Activities</a></h3>
+            <p>
+            <form class="fluid" role="search" method="post">
+            <input id="search-input" class="form-control ds-input" type="search" placeholder="🔍︎  Search a City" aria-label="Search" role="combobox" name="cityName" />
+                <button class="btn btn-dark fluid form-control" type="submit" a asp-controller="Home" asp-action="DisplayResults" asp-route-id="DisplayResults">Search</button>       
+            </form>
+            </p>
+            <p>Search for activities, attractions & hidden gems at your destination to add to your Bucket List.</p>
+        </div>
+        <div class="col-sm-4">
+            <h3><a class="nav-link text-dark" asp-area="" asp-controller="SearchHotels" asp-action="Hotel">🏨 Rest Your Head</a></h3>        
+            <p>Find available hotel accommodations along the route to your destination.</p>
+            <p>Search for deals on places to stay on your adventure.</p>
+        </div>
+        <div class="col-sm-4">
+            <h3><a class="nav-link text-dark" asp-area="" asp-controller="Destinations" asp-action="Index">🪣 Bucket List</a></h3>
+            <p>Create and personalize your Bucket List and start planning your next adventure.</p>
+            <p>View your Bucket List, manually add destinations or edit your stored destinations.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <h3><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">🧭 Navigate</a></h3>
+            <p>
+            <form class="fluid" role="search" method="post">
+            <input id="search-input" class="form-control ds-input" type="search" placeholder="🔍︎  Search a City" aria-label="Search" role="combobox" name="cityName" />
+                <button class="btn btn-warning fluid form-control" type="submit" a asp-controller="Home" asp-action="Navigate" asp-route-id="DisplayNavigate">Search</button>       
+            </form>
+            </p>
+            <p>Get driving, walking, cycling routes and directions.</p>
+            <p>Plan your route with trip durations, estimated distances and turn-by-turn instructions.</p>
+        </div>
+        <div class="col-sm-4">
+            <h3><a class="nav-link text-dark" asp-area="" asp-controller="UserProfile" asp-action="Index">👤 User Profile</a></h3>        
+            <p>Personalize your interests.</p>
+            <p>Store a nearby address to simplify navigating to your chosen destinations. </p>
+            <p><a asp-area="Identity" asp-page="/Account/Login">Login</a> to your Bucket List Adventure account or <a asp-area="Identity" asp-page="/Account/Register"><br />Create a new account</a> for free. </p>
+        </div>
+        <div class="col-sm-4">       
+            <p><img src="~/images/bucket_snorkle.jpg" alt="Home" class="img-fluid" /></p> 
+            <p></p>
+        </div>
+    </div>
 </div>
+</body>
+</html>
