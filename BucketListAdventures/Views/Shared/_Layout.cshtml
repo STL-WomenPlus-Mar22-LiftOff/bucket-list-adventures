@@ -10,32 +10,26 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3" flex-coloumn flex-sm-row>
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/bucket_snorkle.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top" /> Bucket List Adventures</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/bucket_snorkle.jpg" alt="Logo" style="width:40px;" class="rounded-pill" class="d-inline-block align-text-top" /> Bucket List Adventures</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Destinations" asp-action="Index"><img src="~/images/bucket_checkmark.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top" />My Bucket List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search">🔍︎ Search</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SearchTravellers">🔍︎ Search by Traveller</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Navigate"><img src="~/images/bucket_compass.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top" />Navigate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SearchHotels" asp-action="Hotel">🏨 Rest Your Head</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="UserProfile" asp-action="Index">User Profile</a>
-                        </li>
-                    </ul>
+                    <nav class="nav nav-pills flex-column flex-sm-row">                      
+                            <a class="flex-sm-fill text-sm-center nav-link text-light" asp-area="" asp-controller="Destinations" asp-action="Index">🪣 My Bucket List</a>
+                            <a class="flex-sm-fill text-sm-center nav-link text-light" asp-area="" asp-controller="Home" asp-action="Navigate">🧭 Navigate</a>
+                            <a class="flex-sm-fill text-sm-center nav-link text-light" asp-area="" asp-controller="SearchHotels" asp-action="Hotel">🏨 Rest Your Head</a>                  
+                    </nav>
+                </div>
+                <div>
+                    <form class="d-flex" role="search" method="post">
+                        <input type="search" placeholder="🔍︎  Search a City" aria-label="Search" name="cityName" />
+                        <button class="btn btn-primary" type="submit" a asp-controller="Home" asp-action="DisplayResults" asp-route-id="DisplayResults">Search Activities</button>       
+                    </form>
+                </div>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -49,7 +43,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - BucketListAdventures - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Bucket List Adventures | 🚀 Visit <a href="https://www.launchcode.org/">LaunchCode</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
