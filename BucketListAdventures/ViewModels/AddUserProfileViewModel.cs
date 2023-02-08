@@ -11,8 +11,11 @@ namespace BucketListAdventures.ViewModels
         
         public List<AddUserInterestsViewModel> UserInterests { get; set; }
 
-        [Requires(ErrorMessage = "Interests is required")]
+        [Required(ErrorMessage = "Interests is required")]
         public List<string> Interests { get; set; }
+
+        [Required(ErrorMessage = "AirLine code is required")]
+        public string AirLineCode { get; set; }
 
         public AddUserProfileViewModel()
         {

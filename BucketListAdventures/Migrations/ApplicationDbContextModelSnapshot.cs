@@ -72,6 +72,10 @@ namespace BucketListAdventures.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("AirLineCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");

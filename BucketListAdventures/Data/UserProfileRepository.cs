@@ -41,6 +41,7 @@ namespace BucketListAdventures.Data
             userProfile.Address = profile.Address;
             userProfile.Interests = profile.Interests;
             userProfile.Name = profile.Name;
+            userProfile.AirLineCode = profile.AirLineCode;
             _context.UserProfiles.Update(userProfile);
         }
 
