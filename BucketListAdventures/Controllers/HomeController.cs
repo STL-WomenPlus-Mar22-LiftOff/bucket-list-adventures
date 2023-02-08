@@ -16,13 +16,8 @@ namespace BucketListAdventures.Controllers
     public class HomeController : Controller
     {
         private readonly IUserProfileRepository _repository;
-        private readonly string _rapidApiKey = Environment.GetEnvironmentVariable("X-RapidAPI-Key", EnvironmentVariableTarget.User);
-        private readonly string _rapidApiHost = Environment.GetEnvironmentVariable("X-RapidAPI-Host", EnvironmentVariableTarget.User);
-
-
         private readonly ILogger<HomeController> _logger;
         private static JArray data;
-        ClimateNormals climateNormals = new ClimateNormals();
 
         private ApplicationRepository _repo;
         private readonly IConfiguration _config;
@@ -110,8 +105,8 @@ namespace BucketListAdventures.Controllers
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/flights/create-session?o1={origin}&d1={destination}&dd1={startDate.ToString("yyyy-MM-dd")}&ta={totalTravellers}&c=0"),
                 Headers =
                     {
-                        { "X-RapidAPI-Key", _rapidApiKey },
-                        { "X-RapidAPI-Host", _rapidApiHost },
+                        { "X-RapidAPI-Key", travelAdvisorApiKey },
+                        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
                     },
             };
         }
@@ -124,8 +119,8 @@ namespace BucketListAdventures.Controllers
                 RequestUri = new Uri($"https://travel-advisor.p.rapidapi.com/airports/search?query={destination}&locale=en_US"),
                 Headers =
                     {
-                        { "X-RapidAPI-Key", _rapidApiKey },
-                        { "X-RapidAPI-Host", _rapidApiHost },
+                        { "X-RapidAPI-Key", travelAdvisorApiKey },
+                        { "X-RapidAPI-Host", "travel-advisor.p.rapidapi.com" },
                     },
             };
         }
