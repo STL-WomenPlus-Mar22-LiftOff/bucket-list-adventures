@@ -1,35 +1,44 @@
 ﻿@using Newtonsoft.Json.Linq
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var item in ViewBag.itineraries)
-        {
-            <div class="col">
-                <div class="card">
-                    @foreach (KeyValuePair<string, string> image in ViewBag.carrierImages)
-                    {
-                        if (image.Key.Equals(((JToken)item)["m"].ToString()))
+    @if (ViewBag.itineraries != null)
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var item in ViewBag.itineraries)
+            {
+                <div class="col">
+                    <div class="card">
+                        @foreach (KeyValuePair<string, string> image in ViewBag.carrierImages)
                         {
-                            <img src="@image.Value" style="width:200px;height:100px" class="card-img-top" alt="@image.Key">
+                            if (image.Key.Equals(((JToken)item)["m"].ToString()))
+                            {
+                                <img src="@image.Value" style="width:200px;height:100px" class="card-img-top" alt="@image.Key">
+                            }
                         }
-                    }
-                    <div class="card-body">
-                        <h5 class="card-title">@item["e"]</h5>
-                        <p class="card-text">
-                            <div class="row">
-                                <div class="col-6">
-                                    <span>Source : @item["da"]</span><br />
-                                    <span>Destination : @item["aa"]</span>
-                                    <span>Departure : @item["dd"]</span><br />
-                                    <span>Arrival : @item["ad"]</span><br />
+                        <div class="card-body">
+                            <h5 class="card-title">@item["e"]</h5>
+                            <p class="card-text">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span>Source : @item["da"]</span><br />
+                                        <span>Destination : @item["aa"]</span>
+                                        <span>Departure : @item["dd"]</span><br />
+                                        <span>Arrival : @item["ad"]</span><br />
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-secondary" disabled="disabled">book-now</button>
+                                    </div>
                                 </div>
-                                <div class="col-12">
-                                    <button class="btn btn-secondary" disabled="disabled">book-now</button>
-                                </div>
-                            </div>
-                        </p>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>            
-        }
-    </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            No Results found!
+        </div>
+    }
 </div>

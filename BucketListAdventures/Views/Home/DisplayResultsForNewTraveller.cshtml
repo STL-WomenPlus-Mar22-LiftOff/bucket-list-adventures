@@ -1,0 +1,79 @@
+﻿@using Newtonsoft.Json.Linq
+<div class="container">
+    @if (ViewBag.itineraries != null)
+    {
+        <div class="row row-cols-md-12 g-4">
+            <div class="col-2">
+                <div class="card m-2">
+                    <div class="card-body">
+                        <h5 class="card-title">Carriers</h5>
+                        <p class="card-text">
+                            @foreach (var carrier in ViewBag.flightResults["carriers"])
+                            {
+                                <span>@carrier["n"]</span><br />
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-10">
+                @foreach (var itinerary in ViewBag.flightResults["itineraries"])
+                {
+                    <div class="card m-2">
+                        @foreach (KeyValuePair<string, string> image in ViewBag.carrierImages)
+                        {
+                            if (image.Key.Equals(((JToken)itinerary["f"][0]["l"][0])["m"].ToString()))
+                            {
+                                <img src="@image.Value" style="width:100px;height:50px" class="card-img-top" alt="@image.Key">
+                            }
+                        }
+                        <div class="card-body">
+                            @{
+                                int count = ((JArray)itinerary["f"][0]["l"]).Count;
+                            }
+                            <h5 class="card-title">@itinerary["f"][0]["l"][0]["e"] @( count <= 1 ? "(Non-Stop)" : "(" + (count - 1).ToString() + " Stop)")</h5>
+                            <p class="card-text">
+                                <div class="row">
+                                    <div class="col-10">  
+                                @foreach (var item in itinerary["f"][0]["l"])
+                                {
+                                    var destAirlineDesc = "";
+                                    var sourceAirlineDesc = "";
+                                    @foreach (var airport in ViewBag.flightResults["airports"])
+                                    {
+                                        if (item["da"] == airport["c"])
+                                        {
+                                            sourceAirlineDesc = airport["d"];
+                                        }
+                                        if (item["aa"] == airport["c"])
+                                        {
+                                            destAirlineDesc = airport["d"];
+                                        }
+                                    }
+                                        <span>Source : @item["da"] (@sourceAirlineDesc)</span><br />
+                                        <span>Destination : @item["aa"] (@destAirlineDesc)</span><br />
+                                        <span>Departure : @item["dd"]</span><br />
+                                        <span>Arrival : @item["ad"]</span><br />
+                                }
+                                    </div>
+                                    <div class="col-2 align-content-center">
+                                        <span><b>@itinerary["l"][0]["pr"]["dp"]</b></span>
+                                    </div>
+                                </div>
+                            </p>
+                            <div class="col-12">
+                                <button class="btn btn-secondary" disabled="disabled">book-now</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            No Results found!
+        </div>
+    }
+</div>
